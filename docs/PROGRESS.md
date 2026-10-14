@@ -35,3 +35,10 @@ TTS: ~8 | STT: ~20  → well under 1% of 5,000 credits (cost/call unknown, monit
 - **BLOCKER**: api.vachana.ai currently unreachable from this machine (conn
   resets; google/github/cloudflare.com fine → host-specific). Benchmark run
   pending connectivity. If it persists >30 min, restart the router (new IP).
+
+### State at pause
+- Everything except live benchmark runs is built + tested (61 tests green).
+- `outputs/api_watch.log` polls vachana every 60s for recovery.
+- Next when API is back: `scripts/run_benchmark.py --limit 20` →
+  `scripts/run_enhance_eval.py` → heatmap → real clips → demo video.
+- Local commits unpushed (push when ready).
