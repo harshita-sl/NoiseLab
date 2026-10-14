@@ -17,3 +17,21 @@
 
 ### API calls so far (approx)
 TTS: ~8 | STT: ~20  → well under 1% of 5,000 credits (cost/call unknown, monitor on dashboard)
+
+## 2026-10-14 (cont.)
+- Corpus: data/corpus.json — 52 entries (20 hi, 16 hinglish, 16 mr), entities
+  marked. Chose Marathi as the regional language (Devanagari → normalizer
+  extends cheaply; award-relevant regional language).
+- noiselab/degrade.py: exact-SNR mixing + synth noise (white/pink/fan/
+  traffic/babble) + file loading + telephony sim (8k/bandpass/mu-law/PLC).
+- noiselab/score.py: WER/CER on canonical text + entity accuracy (bounded
+  substring — Indic marks handled, "500" won't match "5000").
+- noiselab/runner.py + scripts/run_benchmark.py: --dry-run counts calls first
+  (20 entries × 19 conds = 380 jobs ≈ 398 API calls).
+- noiselab/enhance.py: hp / specgate / loudnorm / vad chains + eval script.
+- app.py (Streamlit): live + replay + results pages; verified boot.
+- data/real/ + data/noise/ scaffolding with license log.
+- IDEA_RECOMMENDATION.md written (Part C).
+- **BLOCKER**: api.vachana.ai currently unreachable from this machine (conn
+  resets; google/github/cloudflare.com fine → host-specific). Benchmark run
+  pending connectivity. If it persists >30 min, restart the router (new IP).
