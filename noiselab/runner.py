@@ -133,7 +133,8 @@ def run(jobs: list[Job], *, delay: float = 0.3,
     rows: list[dict] = []
     if results_path.exists():
         rows = json.loads(results_path.read_text(encoding="utf-8"))["rows"]
-    done = {(r["id"], r["cond"]) for r in rows}
+    # only successful rows count as done — errored jobs retry on re-run
+    done = {(r["id"], r["cond"]) for r in rows if r.get("score")}
 
     for i, job in enumerate(jobs, 1):
         e, c = job.entry, job.cond
@@ -153,6 +154,11 @@ def run(jobs: list[Job], *, delay: float = 0.3,
             row = {"id": e["id"], "split": e["split"], "cond": c.name,
                    "stt_lang": e["stt_lang"], "hyp": None,
                    "score": None, "error": str(exc)[:300]}
+        # drop any earlier error row for this (id, cond) on success
+        if row.get("score"):
+            rows = [r for r in rows
+                    if not (r["id"] == e["id"] and r["cond"] == c.name
+                            and r.get("error"))]
         rows.append(row)
         done.add((e["id"], c.name))
         results_path.write_text(
