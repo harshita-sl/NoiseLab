@@ -1,8 +1,8 @@
 {
   "meta": {
-    "description": "Synthetic evaluation corpus: Hindi + Hinglish + Marathi sentences with marked critical entities (amounts, quantities, names, dates, products).",
-    "note": "tts_text uses spoken-form number words so TTS output is controlled. ref is the expected verbatim transcript in the stt_lang's script. entities[].value is the canonical form that must appear in the canonicalized hypothesis.",
-    "voices": {"hi-IN": ["Nalini", "Deepak"], "hi-en": ["Poorvi"], "mr-IN": ["Zahira", "Ishaan"]}
+    "description": "Synthetic evaluation corpus: Hindi + Hinglish + Marathi + Telugu + Telenglish sentences with marked critical entities (amounts, quantities, names, dates, products).",
+    "note": "tts_text uses spoken-form number words so TTS output is controlled. ref is the expected verbatim transcript in the stt_lang's script. entities[].value is the canonical form that must appear in the canonicalized hypothesis. 'teleng' entries are Latin-script Telugu-English (TTS via te-IN Telugu voice, STT scored with en-IN -> Latin output).",
+    "voices": {"hi-IN": ["Nalini", "Deepak"], "hi-en": ["Poorvi"], "mr-IN": ["Zahira", "Ishaan"], "te-IN": ["Suhana", "Lavanya", "Yukti", "Varuni", "Lehara"]}
   },
   "entries": [
     {"id": "hi01", "split": "hi", "tts_text": "राहुल ने आज पाँच सौ रुपये दिए।", "ref": "राहुल ने आज पाँच सौ रुपये दिए", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "entities": [{"type": "amount", "value": "500"}, {"type": "name", "value": "राहुल"}]},
@@ -58,6 +58,22 @@
     {"id": "mr13", "split": "mr", "tts_text": "एका आठवड्यात पंधराशे रुपये जमा झाले.", "ref": "एका आठवड्यात पंधराशे रुपये जमा झाले", "voice": "Zahira", "tts_lang": "mr-IN", "stt_lang": "mr-IN", "entities": [{"type": "amount", "value": "1500"}]},
     {"id": "mr14", "split": "mr", "tts_text": "लक्ष्मीकांतचा रिचार्ज दोनशे एकोणचाळीस रुपयांचा झाला.", "ref": "लक्ष्मीकांतचा रिचार्ज दोनशे एकोणचाळीस रुपयांचा झाला", "voice": "Ishaan", "tts_lang": "mr-IN", "stt_lang": "mr-IN", "entities": [{"type": "amount", "value": "239"}, {"type": "name", "value": "लक्ष्मीकांतचा"}]},
     {"id": "mr15", "split": "mr", "tts_text": "सायंकाळी सहा वाजता पार्सल येईल.", "ref": "सायंकाळी सहा वाजता पार्सल येईल", "voice": "Zahira", "tts_lang": "mr-IN", "stt_lang": "mr-IN", "entities": [{"type": "time", "value": "6 वाजता"}]},
-    {"id": "mr16", "split": "mr", "tts_text": "बाळूने एकशे रुपये दिले.", "ref": "बाळूने एकशे रुपये दिले", "voice": "Ishaan", "tts_lang": "mr-IN", "stt_lang": "mr-IN", "entities": [{"type": "amount", "value": "100"}, {"type": "name", "value": "बाळूने"}]}
+    {"id": "mr16", "split": "mr", "tts_text": "बाळूने एकशे रुपये दिले.", "ref": "बाळूने एकशे रुपये दिले", "voice": "Ishaan", "tts_lang": "mr-IN", "stt_lang": "mr-IN", "entities": [{"type": "amount", "value": "100"}, {"type": "name", "value": "बाळूने"}]},
+
+    {"id": "te01", "split": "te", "tts_text": "రమేష్ ఈరోజు ఐదు వందలు రూపాయలు ఇచ్చాడు.", "ref": "రమేష్ ఈరోజు ఐదు వందలు రూపాయలు ఇచ్చాడు", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "te-IN", "entities": [{"type": "amount", "value": "500"}, {"type": "name", "value": "రమేష్"}]},
+    {"id": "te02", "split": "te", "tts_text": "దుకాణంలో ఇరవై కిలోల బియ్యం అమ్ముడయ్యింది.", "ref": "దుకాణంలో ఇరవై కిలోల బియ్యం అమ్ముడయ్యింది", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "te-IN", "entities": [{"type": "quantity", "value": "20"}, {"type": "product", "value": "బియ్యం"}]},
+    {"id": "te03", "split": "te", "tts_text": "సీత అక్క వంద రూపాయలు అప్పు తీసుకుంది.", "ref": "సీత అక్క వంద రూపాయలు అప్పు తీసుకుంది", "voice": "Lavanya", "tts_lang": "te-IN", "stt_lang": "te-IN", "entities": [{"type": "amount", "value": "100"}, {"type": "name", "value": "సీత"}]},
+    {"id": "te04", "split": "te", "tts_text": "ఈరోజు వేయి రూపాయల అమ్మకం జరిగింది.", "ref": "ఈరోజు వేయి రూపాయల అమ్మకం జరిగింది", "voice": "Yukti", "tts_lang": "te-IN", "stt_lang": "te-IN", "entities": [{"type": "amount", "value": "1000"}]},
+    {"id": "te05", "split": "te", "tts_text": "కాకాకు ఏడు వందల యాభై రూపాయలు ఇవ్వాలి.", "ref": "కాకాకు ఏడు వందల యాభై రూపాయలు ఇవ్వాలి", "voice": "Varuni", "tts_lang": "te-IN", "stt_lang": "te-IN", "entities": [{"type": "amount", "value": "750"}]},
+    {"id": "te06", "split": "te", "tts_text": "నలభై రూపాయల పాలు మిగిలాయి.", "ref": "నలభై రూపాయల పాలు మిగిలాయి", "voice": "Lehara", "tts_lang": "te-IN", "stt_lang": "te-IN", "entities": [{"type": "amount", "value": "40"}, {"type": "product", "value": "పాలు"}]},
+    {"id": "te07", "split": "te", "tts_text": "రెండు వేల రూపాయల ఆర్డర్ కన్ఫర్మ్ అయింది.", "ref": "రెండు వేల రూపాయల ఆర్డర్ కన్ఫర్మ్ అయింది", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "te-IN", "entities": [{"type": "amount", "value": "2000"}]},
+    {"id": "te08", "split": "te", "tts_text": "పది డజన్ల గుడ్లు వచ్చాయి.", "ref": "పది డజన్ల గుడ్లు వచ్చాయి", "voice": "Lavanya", "tts_lang": "te-IN", "stt_lang": "te-IN", "entities": [{"type": "quantity", "value": "10"}, {"type": "product", "value": "గుడ్లు"}]},
+
+    {"id": "tg01", "split": "teleng", "tts_text": "Naa shop lo ee roju aidu vandalu rupayalu sales ayyayi.", "ref": "naa shop lo ee roju aidu vandalu rupayalu sales ayyayi", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "en-IN", "entities": [{"type": "amount", "value": "500"}]},
+    {"id": "tg02", "split": "teleng", "tts_text": "Ravi ki moodu veyalu rupayalu ivvali.", "ref": "ravi ki moodu veyalu rupayalu ivvali", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "en-IN", "entities": [{"type": "amount", "value": "3000"}, {"type": "name", "value": "ravi"}]},
+    {"id": "tg03", "split": "teleng", "tts_text": "Akka order padi kilolu rice teesukellindi.", "ref": "akka order padi kilolu rice teesukellindi", "voice": "Lavanya", "tts_lang": "te-IN", "stt_lang": "en-IN", "entities": [{"type": "quantity", "value": "10"}, {"type": "product", "value": "rice"}]},
+    {"id": "tg04", "split": "teleng", "tts_text": "Monthly bill rendu veyalu aidu vandalu vachindi.", "ref": "monthly bill rendu veyalu aidu vandalu vachindi", "voice": "Yukti", "tts_lang": "te-IN", "stt_lang": "en-IN", "entities": [{"type": "amount", "value": "2500"}]},
+    {"id": "tg05", "split": "teleng", "tts_text": "Customer advance lo veyi rupayalu ichaaru.", "ref": "customer advance lo veyi rupayalu ichaaru", "voice": "Varuni", "tts_lang": "te-IN", "stt_lang": "en-IN", "entities": [{"type": "amount", "value": "1000"}]},
+    {"id": "tg06", "split": "teleng", "tts_text": "Stock lo yabhai packets migilayi.", "ref": "stock lo yabhai packets migilayi", "voice": "Lehara", "tts_lang": "te-IN", "stt_lang": "en-IN", "entities": [{"type": "quantity", "value": "50"}]}
   ]
 }

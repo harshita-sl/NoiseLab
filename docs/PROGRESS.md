@@ -42,3 +42,6 @@ TTS: ~8 | STT: ~20  → well under 1% of 5,000 credits (cost/call unknown, monit
 - Next when API is back: `scripts/run_benchmark.py --limit 20` →
   `scripts/run_enhance_eval.py` → heatmap → real clips → demo video.
 - Local commits unpushed (push when ready).
+- Corpus + normalizer now cover Telugu (te-IN, Telugu script refs) and
+  Telenglish (Latin-script Telugu-English, scored with en-IN). Real-clip
+  README updated so recordings in te/teleng plug into the same scorer.

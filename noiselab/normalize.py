@@ -161,6 +161,36 @@ _ROM_HI_ONES = {
 _ROM_HI_SCALES = {"sau": 100, "sow": 100, "hazaar": 1000, "hazar": 1000,
                   "karod": 10_000_000}
 
+# Telugu — own script (te-IN STT output). Plural scale forms included
+# (వందలు, వేలు). Compound hundreds like "ఐదు వందలు" -> 5 x 100.
+_TE_ONES = {
+    "శూన్య": 0, "ఒకటి": 1, "ఒక": 1, "రెండు": 2, "మూడు": 3, "నాలుగు": 4,
+    "ఐదు": 5, "ఆరు": 6, "ఏడు": 7, "ఎనిమిది": 8, "తొమ్మిది": 9,
+    "పది": 10, "పదకొండు": 11, "పన్నెండు": 12, "పదమూడు": 13,
+    "పద్నాలుగు": 14, "పదిహేను": 15, "పదహారు": 16, "పదిహేడు": 17,
+    "పద్దెనిమిది": 18, "పందొమ్మిది": 19, "ఇరవై": 20, "ఇరవయ్యి": 20,
+    "మూప్పై": 30, "నలభై": 40, "యాభై": 50, "అరవై": 60, "డెబ్బై": 70,
+    "ఎనభై": 80, "తొంభై": 90,
+}
+_TE_SCALES = {"వంద": 100, "వందలు": 100, "వందల": 100,
+              "వేయి": 1000, "వేలు": 1000, "వేయలు": 1000, "వేల": 1000,
+              "లక్ష": 100_000, "లక్షలు": 100_000, "లక్షల": 100_000,
+              "కోటి": 10_000_000, "కోట్లు": 10_000_000, "కోట్ల": 10_000_000}
+
+# Romanized Telugu — for Telenglish refs / en-IN output on te-EN audio.
+_ROM_TE_ONES = {
+    "okati": 1, "okka": 1, "rendu": 2, "moodu": 3, "mudu": 3,
+    "naalugu": 4, "nalugu": 4, "nalgu": 4, "aidu": 5, "ayidu": 5,
+    "aaru": 6, "edu": 7, "yedu": 7, "enimidi": 8, "enmidi": 8,
+    "tommidi": 9, "padi": 10, "iravai": 20, "iruvai": 20, "muppai": 30,
+    "nalabhai": 40, "nalubai": 40, "yabhai": 50, "yabai": 50,
+    "aravai": 60, "debbai": 70, "enabhai": 80, "thombai": 90,
+}
+_ROM_TE_SCALES = {"vanda": 100, "vandalu": 100, "vandala": 100,
+                  "veyi": 1000, "velu": 1000, "veyalu": 1000, "vel": 1000,
+                  "laksha": 100_000, "lakshala": 100_000,
+                  "koti": 10_000_000, "kotla": 10_000_000}
+
 _EN_ONES = {
     "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
     "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
@@ -205,9 +235,11 @@ def numbers_to_digits(text: str) -> str:
     "five hundred" -> "500", "दो लाख चालीस हजार" -> "240000",
     "नौ आठ सात" -> "987" (digit stream).
     """
-    ones: dict[str, int] = {**_HI_ONES, **_MR_ONES, **_EN_ONES, **_ROM_HI_ONES}
+    ones: dict[str, int] = {**_HI_ONES, **_MR_ONES, **_EN_ONES,
+                            **_ROM_HI_ONES, **_TE_ONES, **_ROM_TE_ONES}
     scales: dict[str, int] = {**_HI_SCALES, **_MR_SCALES, **_EN_SCALES,
-                              **_ROM_HI_SCALES}
+                              **_ROM_HI_SCALES, **_TE_SCALES,
+                              **_ROM_TE_SCALES}
     num_words = set(ones) | set(scales)
     out: list[str] = []
     span: list[str] = []

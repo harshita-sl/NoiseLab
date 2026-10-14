@@ -23,7 +23,9 @@ Suggested settings (aim for variety):
 | phone-call audio | call yourself, record from speaker near another phone, or use a voice note over WhatsApp |
 
 Say things like the corpus sentences — amounts, quantities, names ("mera
-udhaar saat sau pachaas rupaye hai"). Mix Hindi, Hinglish, Marathi.
+udhaar saat sau pachaas rupaye hai"). Mix languages across clips:
+Hindi, Hinglish, Marathi, Telugu, Telenglish (Telugu-English mix, e.g.
+"naa shop lo ee roju aidu vandalu rupayalu sales ayyayi").
 
 ## Naming + refs
 
@@ -38,6 +40,16 @@ Drop files as `real01.wav` … and add an entry per clip in `refs.json`:
   "ref": "verbatim transcript of what you actually said"
 }
 ```
+
+`stt_lang` per clip:
+
+| what you spoke | stt_lang | ref script |
+|---|---|---|
+| Hindi | `hi-IN` | Devanagari |
+| Hinglish | `en-IN` (Latin output) or `hi-IN` (Devanagari) — try both, they cache separately | match the lang |
+| Marathi | `mr-IN` | Devanagari |
+| Telugu | `te-IN` | Telugu script |
+| Telenglish | `en-IN` | Latin (romanized) |
 
 Then: `.venv/bin/python scripts/score_real.py` — transcribes + scores with the
 same pipeline as the synthetic benchmark.

@@ -78,6 +78,32 @@ class TestNumbersToDigits:
             "rahul ne five hundred rupay die aur maggie k twenty packet bick gaye"
         ) == "rahul ne 500 rupay die aur maggie k 20 packet bick gaye"
 
+    @pytest.mark.parametrize("words,digits", [
+        ("ఐదు వందలు", "500"),
+        ("ఏడు వందల యాభై", "750"),
+        ("వేయి", "1000"),
+        ("రెండు వేల", "2000"),
+        ("ఇరవై", "20"),
+    ])
+    def test_telugu_script(self, words, digits):
+        # te-IN STT outputs Telugu script
+        assert numbers_to_digits(words) == digits
+
+    @pytest.mark.parametrize("words,digits", [
+        ("aidu vandalu", "500"),
+        ("moodu veyalu", "3000"),
+        ("rendu veyalu aidu vandalu", "2500"),
+        ("yabhai", "50"),
+    ])
+    def test_romanized_telugu(self, words, digits):
+        # Telenglish refs / en-IN output on Telugu-English audio
+        assert numbers_to_digits(words) == digits
+
+    def test_telugu_sentence(self):
+        assert numbers_to_digits(
+            "రమేష్ ఈరోజు ఐదు వందలు రూపాయలు ఇచ్చాడు"
+        ) == "రమేష్ ఈరోజు 500 రూపాయలు ఇచ్చాడు"
+
 
 class TestCanonical:
     def test_verbatim_vs_itn_values(self):

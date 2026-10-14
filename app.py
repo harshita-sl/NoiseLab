@@ -66,7 +66,8 @@ def _highlight_diff(ref: str, hyp: str) -> str:
 
 def page_live():
     st.header("Live pipeline")
-    lang = st.selectbox("STT language", ["hi-IN", "en-IN", "mr-IN"],
+    lang = st.selectbox("STT language",
+                        ["hi-IN", "en-IN", "mr-IN", "te-IN"],
                         index=0)
 
     tab_up, tab_mic = st.tabs(["Upload", "Record"])

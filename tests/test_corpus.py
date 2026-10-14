@@ -21,7 +21,7 @@ ENT_TYPES = {"amount", "quantity", "name", "date", "time", "product"}
 
 
 def test_size_and_ids_unique():
-    assert 40 <= len(ENTRIES) <= 60
+    assert 40 <= len(ENTRIES) <= 80
     ids = [e["id"] for e in ENTRIES]
     assert len(ids) == len(set(ids))
 
@@ -52,5 +52,8 @@ def test_split_counts():
     splits = {}
     for e in ENTRIES:
         splits[e["split"]] = splits.get(e["split"], 0) + 1
-    assert set(splits) == {"hi", "hinglish", "mr"}
-    assert all(v >= 12 for v in splits.values())
+    assert set(splits) == {"hi", "hinglish", "mr", "te", "teleng"}
+    for s in ("hi", "hinglish", "mr"):
+        assert splits[s] >= 12
+    for s in ("te", "teleng"):
+        assert splits[s] >= 5
