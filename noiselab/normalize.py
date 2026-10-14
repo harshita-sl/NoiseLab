@@ -117,6 +117,50 @@ _HI_ONES = {
 _HI_SCALES = {"सौ": 100, "हज़ार": 1000, "हजार": 1000, "लाख": 100_000,
               "करोड़": 10_000_000, "करोड": 10_000_000}
 
+# Marathi number words distinct from Hindi ones (shared tokens like वीस,
+# तीस, साठ, बारा, तेरा, चौदा, हजार, लाख are already in the tables above).
+_MR_ONES = {
+    "दोन": 2, "वीस": 20, "पाच": 5, "सहा": 6, "नऊ": 9, "दहा": 10, "अकरा": 11,
+    "पंधरा": 15, "सोळा": 16, "सतरा": 17, "अठरा": 18, "एकोणीस": 19,
+    "चाळीस": 40, "पन्नास": 50, "ऐंशी": 80, "नव्वद": 90,
+    "दोनशे": 200, "तीनशे": 300, "चारशे": 400, "पाचशे": 500,
+    "सहाशे": 600, "सातशे": 700, "आठशे": 800, "नऊशे": 900,
+    "एकशे": 100, "पंधराशे": 1500, "एकोणचाळीस": 39,
+}
+_MR_SCALES = {"शंभर": 100, "हजार": 1000, "लाख": 100_000, "कोटी": 10_000_000}
+
+# Romanized Hindi number words — en-IN STT writes code-mixed speech in Latin
+# script ("paanch sau rupaye"). Common English function-word collisions are
+# avoided ("so", "to"); "do" is included because "do hazaar/sau" is a frequent
+# amount phrase in this domain (both ref and hyp canonicalize identically).
+_ROM_HI_ONES = {
+    "ek": 1, "do": 2, "teen": 3, "char": 4, "paanch": 5, "paach": 5, "cheh": 6,
+    "chhah": 6, "saat": 7, "aath": 8, "ath": 8, "nau": 9, "das": 10,
+    "gyarah": 11, "barah": 12, "terah": 13, "chaudah": 14, "pandrah": 15,
+    "solah": 16, "satrah": 17, "atharah": 18, "unnis": 19, "bees": 20,
+    "ikkis": 21, "bais": 22, "teis": 23, "chaubis": 24, "pachis": 25,
+    "chhabbis": 26, "sattais": 27, "atthais": 28, "untis": 29, "tees": 30,
+    "iktees": 31, "battees": 32, "taintees": 33, "chauntees": 34,
+    "paintees": 35, "chhatees": 36, "saintees": 37, "adtees": 38,
+    "untalees": 39, "chalees": 40, "iktalees": 41, "bayalees": 42,
+    "taintalees": 43, "chawalees": 44, "paintalees": 45, "chhiyalees": 46,
+    "saintalees": 47, "adtalees": 48, "unchas": 49, "pachaas": 50,
+    "ikyavan": 51, "bavan": 52, "tirpan": 53, "chauvan": 54, "pachpan": 55,
+    "chhappan": 56, "sattavan": 57, "atthavan": 58, "unsath": 59,
+    "saath": 60, "iksath": 61, "basath": 62, "tirsath": 63,
+    "chaunsath": 64, "painsath": 65, "chhiyasath": 66, "sadsath": 67,
+    "adsath": 68, "unhattar": 69, "sattar": 70, "ikhattar": 71,
+    "bahattar": 72, "tihattar": 73, "chauhattar": 74, "pachhattar": 75,
+    "chihattar": 76, "sathattar": 77, "athattar": 78, "unyasi": 79,
+    "assi": 80, "ikyasi": 81, "bayasi": 82, "tirasi": 83, "chaurasi": 84,
+    "pachasi": 85, "chhiyasi": 86, "sattasi": 87, "athasi": 88,
+    "nawasi": 89, "nabbe": 90, "ikyanave": 91, "bayanave": 92,
+    "tiranave": 93, "chauranave": 94, "pachanave": 95, "chhiyanave": 96,
+    "sattanave": 97, "atthanave": 98, "ninyanave": 99,
+}
+_ROM_HI_SCALES = {"sau": 100, "sow": 100, "hazaar": 1000, "hazar": 1000,
+                  "karod": 10_000_000}
+
 _EN_ONES = {
     "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
     "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
@@ -131,13 +175,13 @@ _EN_SCALES = {"hundred": 100, "thousand": 1_000, "lakh": 100_000,
               "million": 1_000_000}
 
 
-def _eval_span(tokens: list[str]) -> str:
+def _eval_span(tokens: list[str], ones: dict[str, int],
+               scales: dict[str, int]) -> str:
     """Evaluate a span of number words to a digit string.
 
     If every token is a single digit (0-9), concatenate (phone/PIN style).
     Otherwise use the standard current/total scale accumulation.
     """
-    ones: dict[str, int] = {**_HI_ONES, **_EN_ONES}
     if all(tok in ones and ones[tok] <= 9 for tok in tokens):
         return "".join(str(ones[t]) for t in tokens)
     total, current = 0, 0
@@ -145,7 +189,7 @@ def _eval_span(tokens: list[str]) -> str:
         if tok in ones:
             current += ones[tok]
         else:
-            scale = _HI_SCALES.get(tok) or _EN_SCALES.get(tok) or 1
+            scale = scales.get(tok, 1)
             if scale == 100:
                 current = max(current, 1) * 100
             else:
@@ -161,14 +205,17 @@ def numbers_to_digits(text: str) -> str:
     "five hundred" -> "500", "दो लाख चालीस हजार" -> "240000",
     "नौ आठ सात" -> "987" (digit stream).
     """
-    num_words = set(_HI_ONES) | set(_HI_SCALES) | set(_EN_ONES) | set(_EN_SCALES)
+    ones: dict[str, int] = {**_HI_ONES, **_MR_ONES, **_EN_ONES, **_ROM_HI_ONES}
+    scales: dict[str, int] = {**_HI_SCALES, **_MR_SCALES, **_EN_SCALES,
+                              **_ROM_HI_SCALES}
+    num_words = set(ones) | set(scales)
     out: list[str] = []
     span: list[str] = []
 
     def flush() -> None:
         nonlocal span
         if span:
-            out.append(_eval_span(span))
+            out.append(_eval_span(span, ones, scales))
             span = []
 
     for tok in text.split():
