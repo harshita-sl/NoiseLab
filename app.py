@@ -147,7 +147,8 @@ def page_replay():
     entry_id = st.selectbox("corpus entry", list(entries))
     e = entries[entry_id]
     d = AUDIO_DIR / entry_id
-    conds = sorted(p.stem for p in d.glob("*.wav")) if d.exists() else []
+    conds = sorted(p.stem for p in d.glob("*.wav") if p.stem != "ref") \
+        if d.exists() else []
     if not conds:
         st.warning("no audio generated yet for this entry — run "
                    "run_benchmark.py first")
