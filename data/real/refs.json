@@ -1,4 +1,22 @@
 {
-  "meta": "Reference transcripts for self-recorded real-world clips. One entry per file in this directory.",
-  "entries": []
+  "meta": "Reference transcripts for self-recorded real-world clips. One entry per file in this directory. IMPORTANT: ref must be what you ACTUALLY said, not the STT transcript — otherwise scores are meaningless.",
+  "entries": [
+    {
+      "id": "real01",
+      "file": "real01.wav",
+      "scene": "traffic roadside, phone mic, ~25s, Hindi",
+      "stt_lang": "hi-IN",
+      "ref": "राहुल ने आज पाँच सौ रुपये दिए।(pause) मैगी के बीस पैकेट बिक गए, अब स्टॉक सत्रह बचा है।(pause) रमेश का उधार सात सौ पचास रुपये है।(pause) कल चार कार्टन कोक और दो किलो चीनी मंगवानी है।(pause) सुनीता ने पंद्रह सौ का सामान लिया, पचास रुपये कैश दिए।",
+      "entities": [
+        {"type": "amount", "value": "500"},
+        {"type": "quantity", "value": "20"},
+        {"type": "quantity", "value": "17"},
+        {"type": "amount", "value": "750"},
+        {"type": "quantity", "value": "4"},
+        {"type": "quantity", "value": "2"},
+        {"type": "amount", "value": "1500"},
+        {"type": "amount", "value": "50"}
+      ]
+    }
+  ]
 }

@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from dotenv import load_dotenv
 
 from noiselab.api import transcribe_cached
+from noiselab.normalize import strip_annotations
 from noiselab.score import aggregate, score
 
 load_dotenv()
@@ -38,13 +39,14 @@ def main() -> int:
         try:
             res = transcribe_cached(wav, e["stt_lang"])
             hyp = res.get("transcript", "")
-            s = score(e["ref"], hyp, e.get("entities", []))
+            ref = strip_annotations(e["ref"])
+            s = score(ref, hyp, e.get("entities", []))
             rows.append({"id": e["id"], "scene": e.get("scene", ""),
                          "stt_lang": e["stt_lang"], "hyp": hyp,
                          "score": s.to_dict()})
             print(f"{e['id']} ({e.get('scene','')}) wer={s.wer:.2f} "
                   f"ear={s.entity_acc if s.entity_acc is not None else 'n/a'}\n"
-                  f"  ref : {e['ref']}\n  hyp : {hyp}")
+                  f"  ref : {ref}\n  hyp : {hyp}")
         except Exception as exc:  # noqa: BLE001
             print(f"{e['id']} FAILED: {exc}")
             rows.append({"id": e["id"], "error": str(exc)[:200]})

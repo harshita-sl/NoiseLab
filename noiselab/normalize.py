@@ -263,3 +263,16 @@ def numbers_to_digits(text: str) -> str:
 def canonical(text: str | None) -> str:
     """Full canonical form: normalized text with number words as digits."""
     return numbers_to_digits(normalize_text(text))
+
+
+_ANNOTATION_RE = re.compile(r"\((?:pause|noise|breath|unclear|inaudible)\)",
+                            re.IGNORECASE)
+
+
+def strip_annotations(text: str | None) -> str:
+    """Remove transcriber annotations like (pause) from real-clip refs.
+
+    These mark disfluencies for documentation; they are not spoken words and
+    must not count toward WER.
+    """
+    return _ANNOTATION_RE.sub(" ", text or "")
