@@ -90,7 +90,7 @@ Gnani's own suggested examples (a signal of what will be **crowded**): Kannada f
 
 | Product | Access | Notes |
 |---|---|---|
-| **Prisma v2.5 (STT)** | ✅ REST + WebSocket + Batch API | `POST https://api.vachana.ai/stt/v3`. 10 languages. ≤60 s clips (ideal ≤30 s). WAV/MP3/OGG/FLAC/AAC/M4A, server converts to 16 kHz mono. `format=verbatim` (default) or `transcribe` (ITN: ₹ amounts, dates, times, phone/PIN digit streams, Indian digit grouping). `itn_native_numerals` for native-script digits. `bias_list`/`bias_score` word boosting (≤100 words, verbatim only). `enable_substitution`+`substitution_map` (≤10 find-replace rules post-ITN). |
+| **Prisma v2.5 (STT)** | ✅ REST + WebSocket + Batch API | `POST https://api.vachana.ai/stt/v3`. 10 languages. **≤30 s clips, server-enforced** (`MAX_AUDIO_DURATION_EXCEEDED` on a 37.8 s upload, Oct 19 — the 60 s figure in docs is stale). WAV/MP3/OGG/FLAC/AAC/M4A, server converts to 16 kHz mono. `format=verbatim` (default) or `transcribe` (ITN: ₹ amounts, dates, times, phone/PIN digit streams, Indian digit grouping). `itn_native_numerals` for native-script digits. `bias_list`/`bias_score` word boosting (≤100 words, verbatim only). `enable_substitution`+`substitution_map` (≤10 find-replace rules post-ITN). |
 | **Timbre v2.5 (TTS, beta)** | ✅ REST + SSE + WebSocket | `POST https://api.vachana.ai/api/v1/tts/inference`. 42 voices, 10 Indic languages + English + **Hinglish (`hi-en`, voice Poorvi)**. Params: `language` (incl. `auto`), `speed` (0.85–1.15 or slow/medium/fast). Output: wav/raw/mp3/ogg/mulaw/alaw, 8–48 kHz. Automatic text normalization (numbers, ₹, dates, IDs). |
 | **Timbre v2.0** | ⚠️ SDK default, docs say "will be deprecated soon" | Only 4 voices. **Do not use.** |
 | **Voice Cloning (`vachana-vc-v1`)** | ✅ REST + SSE + WS | Embedding generation from 5–30 s reference audio, then cloned TTS. On the same platform — presumably same credits. |
@@ -115,7 +115,7 @@ Gnani's own suggested examples (a signal of what will be **crowded**): Kannada f
 
 - No public per-call credit pricing found in docs. Dashboard tracks usage. We will **count every API call** and log to PROGRESS.md.
 - Rate limit: `429` exists; no published numbers → build backoff in from the start.
-- STT errors: 400 (bad params/format, >60 s), 403 (auth/credits), 429, 500, 503.
+- STT errors: 400 (bad params/format, >30 s), 403 (auth/credits/edge-WAF on some WAV uploads — FLAC bytes pass), 429, 500, 503.
 - TTS errors: 400 (invalid params/voice), 429, 500 (retry w/ backoff), 503.
 
 ## Corrections to what I believed
