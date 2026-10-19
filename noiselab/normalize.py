@@ -144,7 +144,7 @@ _ROM_HI_ONES = {
     "paintees": 35, "chhatees": 36, "saintees": 37, "adtees": 38,
     "untalees": 39, "chalees": 40, "iktalees": 41, "bayalees": 42,
     "taintalees": 43, "chawalees": 44, "paintalees": 45, "chhiyalees": 46,
-    "saintalees": 47, "adtalees": 48, "unchas": 49, "pachaas": 50,
+    "saintalees": 47, "adtalees": 48, "unchas": 49, "pachaas": 50, "pachas": 50,
     "ikyavan": 51, "bavan": 52, "tirpan": 53, "chauvan": 54, "pachpan": 55,
     "chhappan": 56, "sattavan": 57, "atthavan": 58, "unsath": 59,
     "saath": 60, "iksath": 61, "basath": 62, "tirsath": 63,

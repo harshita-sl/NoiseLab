@@ -204,6 +204,63 @@ def wav_duration_s(path: str | Path) -> float:
         return w.getnframes() / w.getframerate()
 
 
+MAX_STT_SECONDS = 30.0  # server-enforced (MAX_AUDIO_DURATION_EXCEEDED)
+
+
+def split_at_quiet_points(x: np.ndarray, sr: int, *, max_s: float = 28.0,
+                          frame_ms: float = 20.0) -> list[tuple[int, int]]:
+    """Sample bounds so each chunk is <= max_s, cut at the quietest frame
+    in a window before each deadline (avoids chopping mid-word)."""
+    n = len(x)
+    limit = int(max_s * sr)
+    if n <= limit:
+        return [(0, n)]
+    flen = max(1, int(sr * frame_ms / 1000))
+    frames = np.array([np.sqrt(np.mean(x[i:i + flen] ** 2))
+                       for i in range(0, n - flen + 1, flen)])
+    bounds, start = [], 0
+    while n - start > limit:
+        deadline = start + limit
+        f_hi = min(deadline // flen, len(frames))
+        f_lo = max((start + limit // 2) // flen, f_hi - int(5 * sr) // flen)
+        cut = (f_lo + int(np.argmin(frames[f_lo:f_hi]))) * flen \
+            if f_hi > f_lo else deadline
+        bounds.append((start, cut))
+        start = cut
+    bounds.append((start, n))
+    return bounds
+
+
+def transcribe_long(audio: str | Path, language_code: str, *,
+                    max_s: float = 28.0, format: str = "verbatim",
+                    itn_native_numerals: bool = False,
+                    tmp_dir: Path = Path("outputs/chunks")) -> dict:
+    """Transcribe audio longer than the 30s API cap.
+
+    Splits at low-energy points so each chunk fits the cap, transcribes each
+    chunk through the normal cache, and joins transcripts. Short audio goes
+    straight through transcribe_cached().
+    """
+    x, sr = sf.read(str(audio))
+    bounds = split_at_quiet_points(x, sr, max_s=max_s)
+    if len(bounds) == 1:
+        return transcribe_cached(
+            audio, language_code, format=format,
+            itn_native_numerals=itn_native_numerals)
+    tmp_dir.mkdir(parents=True, exist_ok=True)
+    ahash = audio_hash(audio)[:8]
+    texts = []
+    for i, (a, b) in enumerate(bounds):
+        chunk = tmp_dir / f"{Path(audio).stem}_{ahash}_{i}.wav"
+        if not chunk.exists():
+            sf.write(str(chunk), x[a:b], sr)
+        res = transcribe_cached(chunk, language_code, format=format,
+                                itn_native_numerals=itn_native_numerals)
+        texts.append(res.get("transcript", ""))
+    return {"transcript": " ".join(
+        t.strip() for t in texts if t).strip(), "chunks": len(bounds)}
+
+
 def synth_is_cached(text: str, voice: str, language: str,
                     *, model: str = "timbre-v2.5",
                     sample_rate: int = 16000,

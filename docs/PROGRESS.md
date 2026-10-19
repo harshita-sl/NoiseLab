@@ -45,3 +45,9 @@ TTS: ~8 | STT: ~20  → well under 1% of 5,000 credits (cost/call unknown, monit
 - Corpus + normalizer now cover Telugu (te-IN, Telugu script refs) and
   Telenglish (Latin-script Telugu-English, scored with en-IN). Real-clip
   README updated so recordings in te/teleng plug into the same scorer.
+- CORRECTION (verified Oct 19): STT server cap is 30s, not 60s as docs say —
+  api returns MAX_AUDIO_DURATION_EXCEEDED. api.py now has transcribe_long():
+  quiet-point split + per-chunk cached STT + transcript join.
+- First real clips scored: real01 traffic/hi WER 0.00 EAR 1.0,
+  real02 fan/hi WER 0.02 EAR 1.0, real03 canteen/hinglish WER 0.09 EAR 1.0.
+- Normalizer learned a real variant: Prisma renders पचास as "pachas".

@@ -6,7 +6,7 @@
       "file": "real01.wav",
       "scene": "traffic roadside, phone mic, ~25s, Hindi",
       "stt_lang": "hi-IN",
-      "ref": "राहुल ने आज पाँच सौ रुपये दिए।(pause) मैगी के बीस पैकेट बिक गए, अब स्टॉक सत्रह बचा है।(pause) रमेश का उधार सात सौ पचास रुपये है।(pause) कल चार कार्टन कोक और दो किलो चीनी मंगवानी है।(pause) सुनीता ने पंद्रह सौ का सामान लिया, पचास रुपये कैश दिए।",
+      "ref": "राहुल ने पाँच सौ रुपये दिए।(pause) मैगी के बीस पैकेट बिक गए, अब स्टॉक सत्रह बचा है।(pause) रमेश का उधार सात सौ पचास रुपये है।(pause) कल चार कार्टन कोक और दो किलो चीनी मंगवानी है।(pause) सुनीता ने पंद्रह सौ का सामान लिया, पचास रुपये कैश दिए।",
       "entities": [
         {"type": "amount", "value": "500"},
         {"type": "quantity", "value": "20"},
@@ -16,6 +16,42 @@
         {"type": "quantity", "value": "2"},
         {"type": "amount", "value": "1500"},
         {"type": "amount", "value": "50"}
+      ]
+    },
+    {
+      "id": "real02",
+      "file": "real02.wav",
+      "scene": "room fan on, phone mic, ~20s, Hindi (same sentences as real01)",
+      "stt_lang": "hi-IN",
+      "ref": "राहुल ने आज पाँच सौ रुपये दिए। मैगी के बीस पैकेट बिक गए, अब स्टॉक सत्रह बचा है। रमेश का उधार सात सौ पचास रुपये है। कल चार कार्टन कोक और दो किलो चीनी मंगवानी है। सुनीता ने पंद्रह सौ का सामान लिया, पचास रुपये कैश दिए।",
+      "entities": [
+        {"type": "amount", "value": "500"},
+        {"type": "quantity", "value": "20"},
+        {"type": "quantity", "value": "17"},
+        {"type": "amount", "value": "750"},
+        {"type": "quantity", "value": "4"},
+        {"type": "quantity", "value": "2"},
+        {"type": "amount", "value": "1500"},
+        {"type": "amount", "value": "50"}
+      ],
+      "_todo": "DRAFT — same ref as real01 since sentences repeat. Fix if you spoke differently."
+    },
+    {
+      "id": "real03",
+      "file": "real03.wav",
+      "scene": "canteen crowd, phone mic, ~38s, Hinglish (8 sentences)",
+      "stt_lang": "en-IN",
+      "ref": "Bhai aaj ka bill kitna hua UPI se payment kar deta hoon (pause) Twenty packet Maggi aur do carton Coke order kar do (pause) Rahul ka pending balance five hundred rupaye hai update kar dena (pause) Actually delivery kal subah ten baje tak ho jaani chahiye (pause) Ek minute stock check karta hoon shayad seventeen packet bache hain (pause) Invoice number two zero three ka refund pachaas percent hoga (pause) Sector four house number sixteen landmark ke paas wali gali (pause) Please order cancel mat karna main kal call back karta hoon",
+      "entities": [
+        {"type": "quantity", "value": "20"},
+        {"type": "quantity", "value": "2"},
+        {"type": "amount", "value": "500"},
+        {"type": "time", "value": "10"},
+        {"type": "quantity", "value": "17"},
+        {"type": "other", "value": "203"},
+        {"type": "amount", "value": "50"},
+        {"type": "other", "value": "4"},
+        {"type": "other", "value": "16"}
       ]
     }
   ]

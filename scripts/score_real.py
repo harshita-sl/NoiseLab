@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from dotenv import load_dotenv
 
-from noiselab.api import transcribe_cached
+from noiselab.api import transcribe_long
 from noiselab.normalize import strip_annotations
 from noiselab.score import aggregate, score
 
@@ -37,7 +37,7 @@ def main() -> int:
             print(f"missing file: {wav}")
             continue
         try:
-            res = transcribe_cached(wav, e["stt_lang"])
+            res = transcribe_long(wav, e["stt_lang"])
             hyp = res.get("transcript", "")
             ref = strip_annotations(e["ref"])
             s = score(ref, hyp, e.get("entities", []))
