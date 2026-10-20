@@ -255,8 +255,11 @@ def page_counter():
     st.session_state.last_langkey = lang_key
     try:
         st.session_state.prop = propose(parse(transcript, lang), db)
-    except Exception:  # noqa: BLE001
+    except Exception as exc:  # noqa: BLE001
+        import logging
+        logging.getLogger("bolta_app").exception("propose failed")
         st.error("Command samajhne mein error aaya — dobara bolo.")
+        st.caption(f"(detail: {type(exc).__name__})")
         return
     _results(st.session_state.prop, transcript, lang_key)
 
