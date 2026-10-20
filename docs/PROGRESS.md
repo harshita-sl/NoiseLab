@@ -51,3 +51,19 @@ TTS: ~8 | STT: ~20  → well under 1% of 5,000 credits (cost/call unknown, monit
 - First real clips scored: real01 traffic/hi WER 0.00 EAR 1.0,
   real02 fan/hi WER 0.02 EAR 1.0, real03 canteen/hinglish WER 0.09 EAR 1.0.
 - Normalizer learned a real variant: Prisma renders पचास as "pachas".
+
+## Oct 20 — Bolta Khata implementation (megaplan approved)
+
+Done: full `bolta/` package — SQLite ledger + audit/undo, synthetic
+seed (18 products / 12 customers / 90-day history), rules-only parser
+(Devanagari + Hinglish + Telugu script + Telenglish), fuzzy entity
+resolution, action proposals, reorder math, spoken-number layer
+(`say.py`), response templates, NoiseLab pipeline seam. 179 tests
+green. Command eval corpus (80 commands), eval script with dry-run
+(560 calls = 11.2% → needs approval). Smoke eval on live API: 3/3
+correct. Streamlit app `bolta_app.py` (Counter/Khata/Stock/Replay).
+
+Next: full command-eval run (await approval), demo hardening,
+recording more real clips, submission docs.
+
+Credits: ~30 spent total so far (smoke eval + debug calls).
