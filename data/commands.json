@@ -1,92 +1,1156 @@
 {
-  "meta": {
-    "description": "Bolta Khata voice-command eval corpus. Expected = intent + slots the parser must produce; action-success compares the resolved proposal, not just the parse.",
-    "splits": {"hinglish": 32, "hi": 24, "te": 16, "teleng": 8},
-    "note": "amount slots are paise (int). Customers/products must be catalog members for full action-success."
+ "meta": {
+  "description": "Bolta Khata voice-command eval corpus. Expected = intent + slots the parser must produce; action-success compares the resolved proposal, not just the parse.",
+  "splits": {
+   "hinglish": 32,
+   "hi": 24,
+   "te": 16,
+   "teleng": 8
   },
-  "entries": [
-    {"id": "hg01", "split": "hinglish", "tts_text": "Rahul ne paanch sau rupaye diye.", "ref": "rahul ne paanch sau rupaye diye", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "record_payment", "customer": "rahul", "amount": 50000}},
-    {"id": "hg02", "split": "hinglish", "tts_text": "Sunita ka udhaar kitna hai.", "ref": "sunita ka udhaar kitna hai", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "check_credit", "customer": "sunita"}},
-    {"id": "hg03", "split": "hinglish", "tts_text": "Maggi kitni bachi hai.", "ref": "maggi kitni bachi hai", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "check_stock", "product": "maggi"}},
-    {"id": "hg04", "split": "hinglish", "tts_text": "Do kilo chini bik gayi.", "ref": "do kilo chini bik gayi", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "record_sale", "product": "chini", "qty": 2, "unit": "kg"}},
-    {"id": "hg05", "split": "hinglish", "tts_text": "Chaar carton Coke mangwani hai.", "ref": "chaar carton coke mangwani hai", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "add_purchase", "product": "coke", "qty": 4, "unit": "carton"}},
-    {"id": "hg06", "split": "hinglish", "tts_text": "Kal kya order karna chahiye.", "ref": "kal kya order karna chahiye", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "reorder_suggestion"}},
-    {"id": "hg07", "split": "hinglish", "tts_text": "Ramesh ka baki kitna hai batao.", "ref": "ramesh ka baki kitna hai batao", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "check_credit", "customer": "ramesh"}},
-    {"id": "hg08", "split": "hinglish", "tts_text": "Mohan ne do kilo chini liya udhaar par.", "ref": "mohan ne do kilo chini liya udhaar par", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "record_sale", "customer": "mohan", "product": "chini", "qty": 2, "unit": "kg", "credit": true}},
-    {"id": "hg09", "split": "hinglish", "tts_text": "Pachaas packet Parle-G aaye hain.", "ref": "pachaas packet parle g aaye hain", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "add_purchase", "product": "parle g", "qty": 50, "unit": "packet"}},
-    {"id": "hg10", "split": "hinglish", "tts_text": "Undo karo last entry.", "ref": "undo karo last entry", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "undo"}},
-    {"id": "hg11", "split": "hinglish", "tts_text": "Haan theek hai likh do.", "ref": "haan theek hai likh do", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "confirm"}},
-    {"id": "hg12", "split": "hinglish", "tts_text": "Nahi galat hai cancel karo.", "ref": "nahi galat hai cancel karo", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "deny"}},
-    {"id": "hg13", "split": "hinglish", "tts_text": "Vijay ne ikkis sau jama kiye.", "ref": "vijay ne ikkis sau jama kiye", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "record_payment", "customer": "vijay", "amount": 210000}},
-    {"id": "hg14", "split": "hinglish", "tts_text": "Doodh ka stock check karo.", "ref": "doodh ka stock check karo", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "check_stock", "product": "doodh"}},
-    {"id": "hg15", "split": "hinglish", "tts_text": "Aata paanch kilo mangwana hai.", "ref": "aata paanch kilo mangwana hai", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "add_purchase", "product": "aata", "qty": 5, "unit": "kg"}},
-    {"id": "hg16", "split": "hinglish", "tts_text": "Geeta ka balance kitna hai.", "ref": "geeta ka balance kitna hai", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "check_credit", "customer": "geeta"}},
-    {"id": "hg17", "split": "hinglish", "tts_text": "Teen dabba ghee bik gaye.", "ref": "teen dabba ghee bik gaye", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "record_sale", "product": "ghee", "qty": 3, "unit": "dabba"}},
-    {"id": "hg18", "split": "hinglish", "tts_text": "Fatima ne saat sau rupaye udhaar liye the aaj diye.", "ref": "fatima ne saat sau rupaye udhaar liye the aaj diye", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "record_payment", "customer": "fatima", "amount": 70000}},
-    {"id": "hg19", "split": "hinglish", "tts_text": "Chini ka stock kitna pada hai.", "ref": "chini ka stock kitna pada hai", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "check_stock", "product": "chini"}},
-    {"id": "hg20", "split": "hinglish", "tts_text": "Do dozen anda order karo.", "ref": "do dozen anda order karo", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "add_purchase", "product": "anda", "qty": 2, "unit": "dozen"}},
-    {"id": "hg21", "split": "hinglish", "tts_text": "Kaka ka udhaar do sau pachaas likho.", "ref": "kaka ka udhaar do sau pachaas likho", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "check_credit", "customer": "kaka"}},
-    {"id": "hg22", "split": "hinglish", "tts_text": "Ek litre tel bik gaya.", "ref": "ek litre tel bik gaya", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "record_sale", "product": "tel", "qty": 1, "unit": "liter"}},
-    {"id": "hg23", "split": "hinglish", "tts_text": "Suresh ka paisa kitna baaki hai.", "ref": "suresh ka paisa kitna baaki hai", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "check_credit", "customer": "suresh"}},
-    {"id": "hg24", "split": "hinglish", "tts_text": "Sabun ke char piece biki.", "ref": "sabun ke char piece biki", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "record_sale", "product": "sabun", "qty": 4, "unit": "piece"}},
-    {"id": "hg25", "split": "hinglish", "tts_text": "Priya ne do sau rupaye jama kiye.", "ref": "priya ne do sau rupaye jama kiye", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "record_payment", "customer": "priya", "amount": 20000}},
-    {"id": "hg26", "split": "hinglish", "tts_text": "Aaj kya mangana chahiye order mein.", "ref": "aaj kya mangana chahiye order mein", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "reorder_suggestion"}},
-    {"id": "hg27", "split": "hinglish", "tts_text": "Chai patti ke do packet bik gaye.", "ref": "chai patti ke do packet bik gaye", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "record_sale", "product": "chai patti", "qty": 2, "unit": "packet"}},
-    {"id": "hg28", "split": "hinglish", "tts_text": "Anita ka udhaar batao kitna hai.", "ref": "anita ka udhaar batao kitna hai", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "check_credit", "customer": "anita"}},
-    {"id": "hg29", "split": "hinglish", "tts_text": "Bees kilo chawal mangwao.", "ref": "bees kilo chawal mangwao", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "add_purchase", "product": "chawal", "qty": 20, "unit": "kg"}},
-    {"id": "hg30", "split": "hinglish", "tts_text": "Lakshmi ne ek hazaar diye.", "ref": "lakshmi ne ek hazaar diye", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "record_payment", "customer": "lakshmi", "amount": 100000}},
-    {"id": "hg31", "split": "hinglish", "tts_text": "Kurkure kitne packet pade hain.", "ref": "kurkure kitne packet pade hain", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "check_stock", "product": "kurkure"}},
-    {"id": "hg32", "split": "hinglish", "tts_text": "Toh kal ki sabzi ka rate kya hai.", "ref": "toh kal ki sabzi ka rate kya hai", "voice": "Poorvi", "tts_lang": "hi-en", "stt_lang": "en-IN", "expected": {"intent": "unknown"}},
-
-    {"id": "hi01", "split": "hi", "tts_text": "राहुल ने पाँच सौ रुपये दिए।", "ref": "राहुल ने पाँच सौ रुपये दिए", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "record_payment", "customer": "राहुल", "amount": 50000}},
-    {"id": "hi02", "split": "hi", "tts_text": "सुनीता का उधार कितना है।", "ref": "सुनीता का उधार कितना है", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "check_credit", "customer": "सुनीता"}},
-    {"id": "hi03", "split": "hi", "tts_text": "मैगी कितनी बची है।", "ref": "मैगी कितनी बची है", "voice": "Deepak", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "check_stock", "product": "मैगी"}},
-    {"id": "hi04", "split": "hi", "tts_text": "दो किलो चीनी बिक गई।", "ref": "दो किलो चीनी बिक गई", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "record_sale", "product": "चीनी", "qty": 2, "unit": "kg"}},
-    {"id": "hi05", "split": "hi", "tts_text": "चार कार्टन कोक मंगवानी है।", "ref": "चार कार्टन कोक मंगवानी है", "voice": "Deepak", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "add_purchase", "product": "कोक", "qty": 4, "unit": "carton"}},
-    {"id": "hi06", "split": "hi", "tts_text": "कल क्या ऑर्डर करना चाहिए।", "ref": "कल क्या ऑर्डर करना चाहिए", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "reorder_suggestion"}},
-    {"id": "hi07", "split": "hi", "tts_text": "रमेश का बाकी कितना है।", "ref": "रमेश का बाकी कितना है", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "check_credit", "customer": "रमेश"}},
-    {"id": "hi08", "split": "hi", "tts_text": "मोहन ने दो किलो चीनी उधार पर लिया।", "ref": "मोहन ने दो किलो चीनी उधार पर लिया", "voice": "Deepak", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "record_sale", "customer": "मोहन", "product": "चीनी", "qty": 2, "unit": "kg", "credit": true}},
-    {"id": "hi09", "split": "hi", "tts_text": "पचास पैकेट पारले जी आए हैं।", "ref": "पचास पैकेट पारले जी आए हैं", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "add_purchase", "product": "पारले जी", "qty": 50, "unit": "packet"}},
-    {"id": "hi10", "split": "hi", "tts_text": "आखिरी एंट्री हटाओ।", "ref": "आखिरी एंट्री हटाओ", "voice": "Deepak", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "undo"}},
-    {"id": "hi11", "split": "hi", "tts_text": "हाँ ठीक है लिख दो।", "ref": "हाँ ठीक है लिख दो", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "confirm"}},
-    {"id": "hi12", "split": "hi", "tts_text": "नहीं गलत है कैंसल करो।", "ref": "नहीं गलत है कैंसल करो", "voice": "Deepak", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "deny"}},
-    {"id": "hi13", "split": "hi", "tts_text": "विजय ने इक्कीस सौ जमा किए।", "ref": "विजय ने इक्कीस सौ जमा किए", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "record_payment", "customer": "विजय", "amount": 210000}},
-    {"id": "hi14", "split": "hi", "tts_text": "दूध का स्टॉक कितना है।", "ref": "दूध का स्टॉक कितना है", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "check_stock", "product": "दूध"}},
-    {"id": "hi15", "split": "hi", "tts_text": "तीन डब्बा घी बिक गए।", "ref": "तीन डब्बा घी बिक गए", "voice": "Deepak", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "record_sale", "product": "घी", "qty": 3, "unit": "dabba"}},
-    {"id": "hi16", "split": "hi", "tts_text": "फातिमा ने सात सौ रुपये दिए।", "ref": "फातिमा ने सात सौ रुपये दिए", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "record_payment", "customer": "फातिमा", "amount": 70000}},
-    {"id": "hi17", "split": "hi", "tts_text": "काका का उधार कितना बाकी है।", "ref": "काका का उधार कितना बाकी है", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "check_credit", "customer": "काका"}},
-    {"id": "hi18", "split": "hi", "tts_text": "एक लीटर तेल बिक गया।", "ref": "एक लीटर तेल बिक गया", "voice": "Deepak", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "record_sale", "product": "तेल", "qty": 1, "unit": "liter"}},
-    {"id": "hi19", "split": "hi", "tts_text": "सुरेश का पैसा कितना बाकी है।", "ref": "सुरेश का पैसा कितना बाकी है", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "check_credit", "customer": "सुरेश"}},
-    {"id": "hi20", "split": "hi", "tts_text": "बीस किलो चावल मंगवाओ।", "ref": "बीस किलो चावल मंगवाओ", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "add_purchase", "product": "चावल", "qty": 20, "unit": "kg"}},
-    {"id": "hi21", "split": "hi", "tts_text": "गीता का बैलेंस कितना है।", "ref": "गीता का बैलेंस कितना है", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "check_credit", "customer": "गीता"}},
-    {"id": "hi22", "split": "hi", "tts_text": "चाय पत्ती के दो पैकेट बिक गए।", "ref": "चाय पत्ती के दो पैकेट बिक गए", "voice": "Deepak", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "record_sale", "product": "चाय पत्ती", "qty": 2, "unit": "packet"}},
-    {"id": "hi23", "split": "hi", "tts_text": "लक्ष्मी ने एक हज़ार दिए।", "ref": "लक्ष्मी ने एक हज़ार दिए", "voice": "Nalini", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "record_payment", "customer": "लक्ष्मी", "amount": 100000}},
-    {"id": "hi24", "split": "hi", "tts_text": "आज बिजली का बिल आया क्या।", "ref": "आज बिजली का बिल आया क्या", "voice": "Deepak", "tts_lang": "hi-IN", "stt_lang": "hi-IN", "expected": {"intent": "unknown"}},
-
-    {"id": "te01", "split": "te", "tts_text": "రాహుల్ ఐదు వందలు రూపాయలు ఇచ్చాడు.", "ref": "రాహుల్ ఐదు వందలు రూపాయలు ఇచ్చాడు", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "record_payment", "customer": "రాహుల్", "amount": 50000}},
-    {"id": "te02", "split": "te", "tts_text": "సునీత అప్పు ఎంత ఉంది.", "ref": "సునీత అప్పు ఎంత ఉంది", "voice": "Lavanya", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "check_credit", "customer": "సునీత"}},
-    {"id": "te03", "split": "te", "tts_text": "మ్యాగీ స్టాక్ ఎంత ఉంది.", "ref": "మ్యాగీ స్టాక్ ఎంత ఉంది", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "check_stock", "product": "మ్యాగీ"}},
-    {"id": "te04", "split": "te", "tts_text": "రెండు కిలోల చక్కెర అమ్ముడయ్యింది.", "ref": "రెండు కిలోల చక్కెర అమ్ముడయ్యింది", "voice": "Lavanya", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "record_sale", "product": "చక్కెర", "qty": 2, "unit": "kg"}},
-    {"id": "te05", "split": "te", "tts_text": "నాలుగు కార్టన్ల కోక్ మంగించాను.", "ref": "నాలుగు కార్టన్ల కోక్ మంగించాను", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "add_purchase", "product": "కోక్", "qty": 4, "unit": "carton"}},
-    {"id": "te06", "split": "te", "tts_text": "రేపు ఏమి ఆర్డర్ చేయాలి.", "ref": "రేపు ఏమి ఆర్డర్ చేయాలి", "voice": "Lavanya", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "reorder_suggestion"}},
-    {"id": "te07", "split": "te", "tts_text": "రమేష్ కు బాకీ ఎంత ఉంది.", "ref": "రమేష్ కు బాకీ ఎంత ఉంది", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "check_credit", "customer": "రమేష్"}},
-    {"id": "te08", "split": "te", "tts_text": "పాత ఎంట్రీ రద్దు చేయి.", "ref": "పాత ఎంట్రీ రద్దు చేయి", "voice": "Lavanya", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "undo"}},
-    {"id": "te09", "split": "te", "tts_text": "అవును సరే రాయి.", "ref": "అవును సరే రాయి", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "confirm"}},
-    {"id": "te10", "split": "te", "tts_text": "కాదు తప్పు వద్దు.", "ref": "కాదు తప్పు వద్దు", "voice": "Lavanya", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "deny"}},
-    {"id": "te11", "split": "te", "tts_text": "విజయ్ రెండు వేలు జమ చేశాడు.", "ref": "విజయ్ రెండు వేలు జమ చేశాడు", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "record_payment", "customer": "విజయ్", "amount": 200000}},
-    {"id": "te12", "split": "te", "tts_text": "పాలు ఎన్ని మిగిలాయి.", "ref": "పాలు ఎన్ని మిగిలాయి", "voice": "Lavanya", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "check_stock", "product": "పాలు"}},
-    {"id": "te13", "split": "te", "tts_text": "పది కిలోల బియ్యం మంగించండి.", "ref": "పది కిలోల బియ్యం మంగించండి", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "add_purchase", "product": "బియ్యం", "qty": 10, "unit": "kg"}},
-    {"id": "te14", "split": "te", "tts_text": "ఒక లీటరు నూనె అమ్ముడయ్యింది.", "ref": "ఒక లీటరు నూనె అమ్ముడయ్యింది", "voice": "Lavanya", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "record_sale", "product": "నూనె", "qty": 1, "unit": "liter"}},
-    {"id": "te15", "split": "te", "tts_text": "లక్ష్మీ వేయి రూపాయలు చెల్లించింది.", "ref": "లక్ష్మీ వేయి రూపాయలు చెల్లించింది", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "record_payment", "customer": "లక్ష్మీ", "amount": 100000}},
-    {"id": "te16", "split": "te", "tts_text": "బస్ ఎప్పుడు వస్తుంది.", "ref": "బస్ ఎప్పుడు వస్తుంది", "voice": "Lavanya", "tts_lang": "te-IN", "stt_lang": "te-IN", "expected": {"intent": "unknown"}},
-
-    {"id": "tg01", "split": "teleng", "tts_text": "Rahul ki aidu vandalu rupayalu ichaaru.", "ref": "rahul ki aidu vandalu rupayalu ichaaru", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "en-IN", "expected": {"intent": "record_payment", "customer": "rahul", "amount": 50000}},
-    {"id": "tg02", "split": "teleng", "tts_text": "Sunita appu entha undi.", "ref": "sunita appu entha undi", "voice": "Lavanya", "tts_lang": "te-IN", "stt_lang": "en-IN", "expected": {"intent": "check_credit", "customer": "sunita"}},
-    {"id": "tg03", "split": "teleng", "tts_text": "Maggi stock entha undi.", "ref": "maggi stock entha undi", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "en-IN", "expected": {"intent": "check_stock", "product": "maggi"}},
-    {"id": "tg04", "split": "teleng", "tts_text": "Rendu kilolu chakkera ammesanu.", "ref": "rendu kilolu chakkera ammesanu", "voice": "Lavanya", "tts_lang": "te-IN", "stt_lang": "en-IN", "expected": {"intent": "record_sale", "product": "chakkera", "qty": 2, "unit": "kg"}},
-    {"id": "tg05", "split": "teleng", "tts_text": "Nalugu cartonlu coke manginchanu.", "ref": "nalugu cartonlu coke manginchanu", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "en-IN", "expected": {"intent": "add_purchase", "product": "coke", "qty": 4, "unit": "carton"}},
-    {"id": "tg06", "split": "teleng", "tts_text": "Repu emiti order cheyali.", "ref": "repu emiti order cheyali", "voice": "Lavanya", "tts_lang": "te-IN", "stt_lang": "en-IN", "expected": {"intent": "reorder_suggestion"}},
-    {"id": "tg07", "split": "teleng", "tts_text": "Mohan rendu kilolu biyyam teesukunnadu appu meeda.", "ref": "mohan rendu kilolu biyyam teesukunnadu appu meeda", "voice": "Suhana", "tts_lang": "te-IN", "stt_lang": "en-IN", "expected": {"intent": "record_sale", "customer": "mohan", "product": "biyyam", "qty": 2, "unit": "kg", "credit": true}},
-    {"id": "tg08", "split": "teleng", "tts_text": "Paala stock entha undi.", "ref": "paala stock entha undi", "voice": "Lavanya", "tts_lang": "te-IN", "stt_lang": "en-IN", "expected": {"intent": "check_stock", "product": "paala"}}
-  ]
+  "note": "amount slots are paise (int). Customers/products must be catalog members for full action-success."
+ },
+ "entries": [
+  {
+   "id": "hg01",
+   "split": "hinglish",
+   "tts_text": "Rahul ne paanch sau rupaye diye.",
+   "ref": "rahul ne paanch sau rupaye diye",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "record_payment",
+    "customer": "rahul",
+    "amount": 50000
+   }
+  },
+  {
+   "id": "hg02",
+   "split": "hinglish",
+   "tts_text": "Sunita ka udhaar kitna hai.",
+   "ref": "sunita ka udhaar kitna hai",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "check_credit",
+    "customer": "sunita"
+   }
+  },
+  {
+   "id": "hg03",
+   "split": "hinglish",
+   "tts_text": "Maggi kitni bachi hai.",
+   "ref": "maggi kitni bachi hai",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "check_stock",
+    "product": "maggi"
+   }
+  },
+  {
+   "id": "hg04",
+   "split": "hinglish",
+   "tts_text": "Do kilo chini bik gayi.",
+   "ref": "do kilo chini bik gayi",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "record_sale",
+    "product": "chini",
+    "qty": 2,
+    "unit": "kg"
+   }
+  },
+  {
+   "id": "hg05",
+   "split": "hinglish",
+   "tts_text": "Chaar carton Coke mangwani hai.",
+   "ref": "chaar carton coke mangwani hai",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "add_purchase",
+    "product": "coke",
+    "qty": 4,
+    "unit": "carton"
+   }
+  },
+  {
+   "id": "hg06",
+   "split": "hinglish",
+   "tts_text": "Kal kya order karna chahiye.",
+   "ref": "kal kya order karna chahiye",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "reorder_suggestion"
+   }
+  },
+  {
+   "id": "hg07",
+   "split": "hinglish",
+   "tts_text": "Ramesh ka baki kitna hai batao.",
+   "ref": "ramesh ka baki kitna hai batao",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "check_credit",
+    "customer": "ramesh"
+   }
+  },
+  {
+   "id": "hg08",
+   "split": "hinglish",
+   "tts_text": "Mohan ne do kilo chini liya udhaar par.",
+   "ref": "mohan ne do kilo chini liya udhaar par",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "record_sale",
+    "customer": "mohan",
+    "product": "chini",
+    "qty": 2,
+    "unit": "kg",
+    "credit": true
+   }
+  },
+  {
+   "id": "hg09",
+   "split": "hinglish",
+   "tts_text": "Pachaas packet Parle-G aaye hain.",
+   "ref": "pachaas packet parle g aaye hain",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "add_purchase",
+    "product": "parle g",
+    "qty": 50,
+    "unit": "packet"
+   }
+  },
+  {
+   "id": "hg10",
+   "split": "hinglish",
+   "tts_text": "Undo karo last entry.",
+   "ref": "undo karo last entry",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "undo"
+   }
+  },
+  {
+   "id": "hg11",
+   "split": "hinglish",
+   "tts_text": "Haan theek hai likh do.",
+   "ref": "haan theek hai likh do",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "confirm"
+   }
+  },
+  {
+   "id": "hg12",
+   "split": "hinglish",
+   "tts_text": "Nahi galat hai cancel karo.",
+   "ref": "nahi galat hai cancel karo",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "deny"
+   }
+  },
+  {
+   "id": "hg13",
+   "split": "hinglish",
+   "tts_text": "Vijay ne ikkis sau jama kiye.",
+   "ref": "vijay ne ikkis sau jama kiye",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "record_payment",
+    "customer": "vijay",
+    "amount": 210000
+   }
+  },
+  {
+   "id": "hg14",
+   "split": "hinglish",
+   "tts_text": "Doodh ka stock check karo.",
+   "ref": "doodh ka stock check karo",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "check_stock",
+    "product": "doodh"
+   }
+  },
+  {
+   "id": "hg15",
+   "split": "hinglish",
+   "tts_text": "Aata paanch kilo mangwana hai.",
+   "ref": "aata paanch kilo mangwana hai",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "add_purchase",
+    "product": "aata",
+    "qty": 5,
+    "unit": "kg"
+   }
+  },
+  {
+   "id": "hg16",
+   "split": "hinglish",
+   "tts_text": "Geeta ka balance kitna hai.",
+   "ref": "geeta ka balance kitna hai",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "check_credit",
+    "customer": "geeta"
+   }
+  },
+  {
+   "id": "hg17",
+   "split": "hinglish",
+   "tts_text": "Teen dabba ghee bik gaye.",
+   "ref": "teen dabba ghee bik gaye",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "record_sale",
+    "product": "ghee",
+    "qty": 3,
+    "unit": "dabba"
+   }
+  },
+  {
+   "id": "hg18",
+   "split": "hinglish",
+   "tts_text": "Fatima ne saat sau rupaye udhaar liye the aaj diye.",
+   "ref": "fatima ne saat sau rupaye udhaar liye the aaj diye",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "record_payment",
+    "customer": "fatima",
+    "amount": 70000
+   }
+  },
+  {
+   "id": "hg19",
+   "split": "hinglish",
+   "tts_text": "Chini ka stock kitna pada hai.",
+   "ref": "chini ka stock kitna pada hai",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "check_stock",
+    "product": "chini"
+   }
+  },
+  {
+   "id": "hg20",
+   "split": "hinglish",
+   "tts_text": "Do dozen anda order karo.",
+   "ref": "do dozen anda order karo",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "add_purchase",
+    "product": "anda",
+    "qty": 2,
+    "unit": "dozen"
+   }
+  },
+  {
+   "id": "hg21",
+   "split": "hinglish",
+   "tts_text": "Kaka ka udhaar do sau pachaas likho.",
+   "ref": "kaka ka udhaar do sau pachaas likho",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "check_credit",
+    "customer": "kaka"
+   }
+  },
+  {
+   "id": "hg22",
+   "split": "hinglish",
+   "tts_text": "Ek litre tel bik gaya.",
+   "ref": "ek litre tel bik gaya",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "record_sale",
+    "product": "tel",
+    "qty": 1,
+    "unit": "liter"
+   }
+  },
+  {
+   "id": "hg23",
+   "split": "hinglish",
+   "tts_text": "Suresh ka paisa kitna baaki hai.",
+   "ref": "suresh ka paisa kitna baaki hai",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "check_credit",
+    "customer": "suresh"
+   }
+  },
+  {
+   "id": "hg24",
+   "split": "hinglish",
+   "tts_text": "Sabun ke char piece biki.",
+   "ref": "sabun ke char piece biki",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "record_sale",
+    "product": "sabun",
+    "qty": 4,
+    "unit": "piece"
+   }
+  },
+  {
+   "id": "hg25",
+   "split": "hinglish",
+   "tts_text": "Priya ne do sau rupaye jama kiye.",
+   "ref": "priya ne do sau rupaye jama kiye",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "record_payment",
+    "customer": "priya",
+    "amount": 20000
+   }
+  },
+  {
+   "id": "hg26",
+   "split": "hinglish",
+   "tts_text": "Aaj kya mangana chahiye order mein.",
+   "ref": "aaj kya mangana chahiye order mein",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "reorder_suggestion"
+   }
+  },
+  {
+   "id": "hg27",
+   "split": "hinglish",
+   "tts_text": "Chai patti ke do packet bik gaye.",
+   "ref": "chai patti ke do packet bik gaye",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "record_sale",
+    "product": "chai patti",
+    "qty": 2,
+    "unit": "packet"
+   }
+  },
+  {
+   "id": "hg28",
+   "split": "hinglish",
+   "tts_text": "Anita ka udhaar batao kitna hai.",
+   "ref": "anita ka udhaar batao kitna hai",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "check_credit",
+    "customer": "anita"
+   }
+  },
+  {
+   "id": "hg29",
+   "split": "hinglish",
+   "tts_text": "Bees kilo chawal mangwao.",
+   "ref": "bees kilo chawal mangwao",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "add_purchase",
+    "product": "chawal",
+    "qty": 20,
+    "unit": "kg"
+   }
+  },
+  {
+   "id": "hg30",
+   "split": "hinglish",
+   "tts_text": "Lakshmi ne ek hazaar diye.",
+   "ref": "lakshmi ne ek hazaar diye",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "record_payment",
+    "customer": "lakshmi",
+    "amount": 100000
+   }
+  },
+  {
+   "id": "hg31",
+   "split": "hinglish",
+   "tts_text": "Kurkure kitne packet pade hain.",
+   "ref": "kurkure kitne packet pade hain",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "check_stock",
+    "product": "kurkure"
+   }
+  },
+  {
+   "id": "hg32",
+   "split": "hinglish",
+   "tts_text": "Toh kal ki sabzi ka rate kya hai.",
+   "ref": "toh kal ki sabzi ka rate kya hai",
+   "voice": "Poorvi",
+   "tts_lang": "hi-en",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "unknown"
+   }
+  },
+  {
+   "id": "hi01",
+   "split": "hi",
+   "tts_text": "राहुल ने पाँच सौ रुपये दिए।",
+   "ref": "राहुल ने पाँच सौ रुपये दिए",
+   "voice": "Nalini",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "record_payment",
+    "customer": "राहुल",
+    "amount": 50000
+   }
+  },
+  {
+   "id": "hi02",
+   "split": "hi",
+   "tts_text": "सुनीता का उधार कितना है।",
+   "ref": "सुनीता का उधार कितना है",
+   "voice": "Nalini",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "check_credit",
+    "customer": "सुनीता"
+   }
+  },
+  {
+   "id": "hi03",
+   "split": "hi",
+   "tts_text": "मैगी कितनी बची है।",
+   "ref": "मैगी कितनी बची है",
+   "voice": "Deepak",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "check_stock",
+    "product": "मैगी"
+   }
+  },
+  {
+   "id": "hi04",
+   "split": "hi",
+   "tts_text": "दो किलो चीनी बिक गई।",
+   "ref": "दो किलो चीनी बिक गई",
+   "voice": "Nalini",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "record_sale",
+    "product": "चीनी",
+    "qty": 2,
+    "unit": "kg"
+   }
+  },
+  {
+   "id": "hi05",
+   "split": "hi",
+   "tts_text": "चार कार्टन कोक मंगवानी है।",
+   "ref": "चार कार्टन कोक मंगवानी है",
+   "voice": "Deepak",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "add_purchase",
+    "product": "कोक",
+    "qty": 4,
+    "unit": "carton"
+   }
+  },
+  {
+   "id": "hi06",
+   "split": "hi",
+   "tts_text": "कल क्या ऑर्डर करना चाहिए।",
+   "ref": "कल क्या ऑर्डर करना चाहिए",
+   "voice": "Nalini",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "reorder_suggestion"
+   }
+  },
+  {
+   "id": "hi07",
+   "split": "hi",
+   "tts_text": "रमेश का बाकी कितना है।",
+   "ref": "रमेश का बाकी कितना है",
+   "voice": "Nalini",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "check_credit",
+    "customer": "रमेश"
+   }
+  },
+  {
+   "id": "hi08",
+   "split": "hi",
+   "tts_text": "मोहन ने दो किलो चीनी उधार पर लिया।",
+   "ref": "मोहन ने दो किलो चीनी उधार पर लिया",
+   "voice": "Deepak",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "record_sale",
+    "customer": "मोहन",
+    "product": "चीनी",
+    "qty": 2,
+    "unit": "kg",
+    "credit": true
+   }
+  },
+  {
+   "id": "hi09",
+   "split": "hi",
+   "tts_text": "पचास पैकेट पारले जी आए हैं।",
+   "ref": "पचास पैकेट पारले जी आए हैं",
+   "voice": "Nalini",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "add_purchase",
+    "product": "पारले जी",
+    "qty": 50,
+    "unit": "packet"
+   }
+  },
+  {
+   "id": "hi10",
+   "split": "hi",
+   "tts_text": "आखिरी एंट्री हटाओ।",
+   "ref": "आखिरी एंट्री हटाओ",
+   "voice": "Deepak",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "undo"
+   }
+  },
+  {
+   "id": "hi11",
+   "split": "hi",
+   "tts_text": "हाँ ठीक है लिख दो।",
+   "ref": "हाँ ठीक है लिख दो",
+   "voice": "Nalini",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "confirm"
+   }
+  },
+  {
+   "id": "hi12",
+   "split": "hi",
+   "tts_text": "नहीं गलत है कैंसल करो।",
+   "ref": "नहीं गलत है कैंसल करो",
+   "voice": "Deepak",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "deny"
+   }
+  },
+  {
+   "id": "hi13",
+   "split": "hi",
+   "tts_text": "विजय ने इक्कीस सौ जमा किए।",
+   "ref": "विजय ने इक्कीस सौ जमा किए",
+   "voice": "Nalini",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "record_payment",
+    "customer": "विजय",
+    "amount": 210000
+   }
+  },
+  {
+   "id": "hi14",
+   "split": "hi",
+   "tts_text": "दूध का स्टॉक कितना है।",
+   "ref": "दूध का स्टॉक कितना है",
+   "voice": "Nalini",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "check_stock",
+    "product": "दूध"
+   }
+  },
+  {
+   "id": "hi15",
+   "split": "hi",
+   "tts_text": "तीन डब्बा घी बिक गए।",
+   "ref": "तीन डब्बा घी बिक गए",
+   "voice": "Deepak",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "record_sale",
+    "product": "घी",
+    "qty": 3,
+    "unit": "dabba"
+   }
+  },
+  {
+   "id": "hi16",
+   "split": "hi",
+   "tts_text": "फातिमा ने सात सौ रुपये दिए।",
+   "ref": "फातिमा ने सात सौ रुपये दिए",
+   "voice": "Nalini",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "record_payment",
+    "customer": "फातिमा",
+    "amount": 70000
+   }
+  },
+  {
+   "id": "hi17",
+   "split": "hi",
+   "tts_text": "काका का उधार कितना बाकी है।",
+   "ref": "काका का उधार कितना बाकी है",
+   "voice": "Nalini",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "check_credit",
+    "customer": "काका"
+   }
+  },
+  {
+   "id": "hi18",
+   "split": "hi",
+   "tts_text": "एक लीटर तेल बिक गया।",
+   "ref": "एक लीटर तेल बिक गया",
+   "voice": "Deepak",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "record_sale",
+    "product": "तेल",
+    "qty": 1,
+    "unit": "liter"
+   }
+  },
+  {
+   "id": "hi19",
+   "split": "hi",
+   "tts_text": "सुरेश का पैसा कितना बाकी है।",
+   "ref": "सुरेश का पैसा कितना बाकी है",
+   "voice": "Nalini",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "check_credit",
+    "customer": "सुरेश"
+   }
+  },
+  {
+   "id": "hi20",
+   "split": "hi",
+   "tts_text": "बीस किलो चावल मंगवाओ।",
+   "ref": "बीस किलो चावल मंगवाओ",
+   "voice": "Nalini",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "add_purchase",
+    "product": "चावल",
+    "qty": 20,
+    "unit": "kg"
+   }
+  },
+  {
+   "id": "hi21",
+   "split": "hi",
+   "tts_text": "गीता का बैलेंस कितना है।",
+   "ref": "गीता का बैलेंस कितना है",
+   "voice": "Nalini",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "check_credit",
+    "customer": "गीता"
+   }
+  },
+  {
+   "id": "hi22",
+   "split": "hi",
+   "tts_text": "चाय पत्ती के दो पैकेट बिक गए।",
+   "ref": "चाय पत्ती के दो पैकेट बिक गए",
+   "voice": "Deepak",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "record_sale",
+    "product": "चाय पत्ती",
+    "qty": 2,
+    "unit": "packet"
+   }
+  },
+  {
+   "id": "hi23",
+   "split": "hi",
+   "tts_text": "लक्ष्मी ने एक हज़ार दिए।",
+   "ref": "लक्ष्मी ने एक हज़ार दिए",
+   "voice": "Nalini",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "record_payment",
+    "customer": "लक्ष्मी",
+    "amount": 100000
+   }
+  },
+  {
+   "id": "hi24",
+   "split": "hi",
+   "tts_text": "आज बिजली का बिल आया क्या।",
+   "ref": "आज बिजली का बिल आया क्या",
+   "voice": "Deepak",
+   "tts_lang": "hi-IN",
+   "stt_lang": "hi-IN",
+   "expected": {
+    "intent": "unknown"
+   }
+  },
+  {
+   "id": "te01",
+   "split": "te",
+   "tts_text": "రాహుల్ ఐదు వందలు రూపాయలు ఇచ్చాడు.",
+   "ref": "రాహుల్ ఐదు వందలు రూపాయలు ఇచ్చాడు",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "record_payment",
+    "customer": "రాహుల్",
+    "amount": 50000
+   }
+  },
+  {
+   "id": "te02",
+   "split": "te",
+   "tts_text": "సునీత అప్పు ఎంత ఉంది.",
+   "ref": "సునీత అప్పు ఎంత ఉంది",
+   "voice": "Lavanya",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "check_credit",
+    "customer": "సునీత"
+   }
+  },
+  {
+   "id": "te03",
+   "split": "te",
+   "tts_text": "మ్యాగీ స్టాక్ ఎంత ఉంది.",
+   "ref": "మ్యాగీ స్టాక్ ఎంత ఉంది",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "check_stock",
+    "product": "మ్యాగీ"
+   }
+  },
+  {
+   "id": "te04",
+   "split": "te",
+   "tts_text": "రెండు కిలోల చక్కెర అమ్ముడయ్యింది.",
+   "ref": "రెండు కిలోల చక్కెర అమ్ముడయ్యింది",
+   "voice": "Lavanya",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "record_sale",
+    "product": "చక్కెర",
+    "qty": 2,
+    "unit": "kg"
+   }
+  },
+  {
+   "id": "te05",
+   "split": "te",
+   "tts_text": "నాలుగు కార్టన్ల కోక్ మంగించాను.",
+   "ref": "నాలుగు కార్టన్ల కోక్ మంగించాను",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "add_purchase",
+    "product": "కోక్",
+    "qty": 4,
+    "unit": "carton"
+   }
+  },
+  {
+   "id": "te06",
+   "split": "te",
+   "tts_text": "రేపు ఏమి ఆర్డర్ చేయాలి.",
+   "ref": "రేపు ఏమి ఆర్డర్ చేయాలి",
+   "voice": "Lavanya",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "reorder_suggestion"
+   }
+  },
+  {
+   "id": "te07",
+   "split": "te",
+   "tts_text": "రమేష్ కు బాకీ ఎంత ఉంది.",
+   "ref": "రమేష్ కు బాకీ ఎంత ఉంది",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "check_credit",
+    "customer": "రమేష్"
+   }
+  },
+  {
+   "id": "te08",
+   "split": "te",
+   "tts_text": "పాత ఎంట్రీ రద్దు చేయి.",
+   "ref": "పాత ఎంట్రీ రద్దు చేయి",
+   "voice": "Lavanya",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "undo"
+   }
+  },
+  {
+   "id": "te09",
+   "split": "te",
+   "tts_text": "అవును సరే రాయి.",
+   "ref": "అవును సరే రాయి",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "confirm"
+   }
+  },
+  {
+   "id": "te10",
+   "split": "te",
+   "tts_text": "కాదు తప్పు వద్దు.",
+   "ref": "కాదు తప్పు వద్దు",
+   "voice": "Lavanya",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "deny"
+   }
+  },
+  {
+   "id": "te11",
+   "split": "te",
+   "tts_text": "విజయ్ రెండు వేలు జమ చేశాడు.",
+   "ref": "విజయ్ రెండు వేలు జమ చేశాడు",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "record_payment",
+    "customer": "విజయ్",
+    "amount": 200000
+   }
+  },
+  {
+   "id": "te12",
+   "split": "te",
+   "tts_text": "పాలు ఎన్ని మిగిలాయి.",
+   "ref": "పాలు ఎన్ని మిగిలాయి",
+   "voice": "Lavanya",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "check_stock",
+    "product": "పాలు"
+   }
+  },
+  {
+   "id": "te13",
+   "split": "te",
+   "tts_text": "పది కిలోల బియ్యం మంగించండి.",
+   "ref": "పది కిలోల బియ్యం మంగించండి",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "add_purchase",
+    "product": "బియ్యం",
+    "qty": 10,
+    "unit": "kg"
+   }
+  },
+  {
+   "id": "te14",
+   "split": "te",
+   "tts_text": "ఒక లీటరు నూనె అమ్ముడయ్యింది.",
+   "ref": "ఒక లీటరు నూనె అమ్ముడయ్యింది",
+   "voice": "Lavanya",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "record_sale",
+    "product": "నూనె",
+    "qty": 1,
+    "unit": "liter"
+   }
+  },
+  {
+   "id": "te15",
+   "split": "te",
+   "tts_text": "లక్ష్మీ వేయి రూపాయలు చెల్లించింది.",
+   "ref": "లక్ష్మీ వేయి రూపాయలు చెల్లించింది",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "record_payment",
+    "customer": "లక్ష్మీ",
+    "amount": 100000
+   }
+  },
+  {
+   "id": "te16",
+   "split": "te",
+   "tts_text": "బస్ ఎప్పుడు వస్తుంది.",
+   "ref": "బస్ ఎప్పుడు వస్తుంది",
+   "voice": "Lavanya",
+   "tts_lang": "te-IN",
+   "stt_lang": "te-IN",
+   "expected": {
+    "intent": "unknown"
+   }
+  },
+  {
+   "id": "tg01",
+   "split": "teleng",
+   "tts_text": "Rahul ki aidu vandalu rupayalu ichaaru.",
+   "ref": "rahul ki aidu vandalu rupayalu ichaaru",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "record_payment",
+    "customer": "rahul",
+    "amount": 50000
+   }
+  },
+  {
+   "id": "tg02",
+   "split": "teleng",
+   "tts_text": "Sunita appu entha undi.",
+   "ref": "sunita appu entha undi",
+   "voice": "Lavanya",
+   "tts_lang": "te-IN",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "check_credit",
+    "customer": "sunita"
+   }
+  },
+  {
+   "id": "tg03",
+   "split": "teleng",
+   "tts_text": "Maggi stock entha undi.",
+   "ref": "maggi stock entha undi",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "check_stock",
+    "product": "maggi"
+   }
+  },
+  {
+   "id": "tg04",
+   "split": "teleng",
+   "tts_text": "Rendu kilolu chakkera ammesanu.",
+   "ref": "rendu kilolu chakkera ammesanu",
+   "voice": "Lavanya",
+   "tts_lang": "te-IN",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "record_sale",
+    "product": "chakkera",
+    "qty": 2,
+    "unit": "kg"
+   }
+  },
+  {
+   "id": "tg05",
+   "split": "teleng",
+   "tts_text": "Nalugu cartonlu coke manginchanu.",
+   "ref": "nalugu cartonlu coke manginchanu",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "add_purchase",
+    "product": "coke",
+    "qty": 4,
+    "unit": "carton"
+   }
+  },
+  {
+   "id": "tg06",
+   "split": "teleng",
+   "tts_text": "Repu emiti order cheyali.",
+   "ref": "repu emiti order cheyali",
+   "voice": "Lavanya",
+   "tts_lang": "te-IN",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "reorder_suggestion"
+   }
+  },
+  {
+   "id": "tg07",
+   "split": "teleng",
+   "tts_text": "Mohan rendu kilolu biyyam teesukunnadu appu meeda.",
+   "ref": "mohan rendu kilolu biyyam teesukunnadu appu meeda",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "record_sale",
+    "customer": "mohan",
+    "product": "biyyam",
+    "qty": 2,
+    "unit": "kg",
+    "credit": true
+   }
+  },
+  {
+   "id": "tg08",
+   "split": "teleng",
+   "tts_text": "Paala stock entha undi.",
+   "ref": "paala stock entha undi",
+   "voice": "Lavanya",
+   "tts_lang": "te-IN",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "check_stock",
+    "product": "paala"
+   }
+  },
+  {
+   "id": "tg09",
+   "split": "teleng",
+   "tts_text": "Last entry undo cheyi.",
+   "ref": "last entry undo cheyi",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "undo"
+   }
+  },
+  {
+   "id": "tg10",
+   "split": "teleng",
+   "tts_text": "Avunu sare raayi.",
+   "ref": "avunu sare raayi",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "confirm"
+   }
+  },
+  {
+   "id": "tg11",
+   "split": "teleng",
+   "tts_text": "Kaadu wrong vaddu.",
+   "ref": "kaadu wrong vaddu",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "deny"
+   }
+  },
+  {
+   "id": "tg12",
+   "split": "teleng",
+   "tts_text": "Ninna cinema ela undi.",
+   "ref": "ninna cinema ela undi",
+   "voice": "Suhana",
+   "tts_lang": "te-IN",
+   "stt_lang": "en-IN",
+   "expected": {
+    "intent": "unknown"
+   }
+  }
+ ]
 }
