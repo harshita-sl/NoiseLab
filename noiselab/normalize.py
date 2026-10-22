@@ -135,7 +135,8 @@ _MR_SCALES = {"शंभर": 100, "हजार": 1000, "लाख": 100_000, "
 # amount phrase in this domain (both ref and hyp canonicalize identically).
 _ROM_HI_ONES = {
     "ek": 1, "do": 2, "teen": 3, "char": 4, "paanch": 5, "paach": 5, "cheh": 6,
-    "chhah": 6, "saat": 7, "aath": 8, "ath": 8, "nau": 9, "das": 10,
+    "chhah": 6, "saat": 7, "aath": 8, "ath": 8, "nau": 9, "nao": 9,
+    "das": 10,
     "gyarah": 11, "barah": 12, "terah": 13, "chaudah": 14, "pandrah": 15,
     "solah": 16, "satrah": 17, "atharah": 18, "unnis": 19, "bees": 20,
     "ikkis": 21, "bais": 22, "teis": 23, "chaubis": 24, "pachis": 25,

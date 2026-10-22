@@ -61,7 +61,9 @@ WORDS = {
                  "ivvali", "ichaaru", "ichindi", "ivvu", "ivvandi",
                  "icheyam", "dene hai", "dene hain",
                  "జమ", "చేశాడు", "చేసాను", "చేసింది", "చెల్లించింది",
-                 "ichchar", "ichar"},
+                 "ichchar", "ichar",
+                 "deduct", "deducted", "katao", "kaato", "minus",
+                 "reduce", "घटाओ", "घटा", "काटो", "काटें", "कटाओ"},
     "take_buy": {"liya", "liye", "le", "khareeda", "kharida", "teesukunda",
                  "teesukundi", "लिया", "लिए", "खरीदा", "खरीदी", "ली",
                  "తీసుకుంది", "తీసుకున్నాడు"},
@@ -151,6 +153,7 @@ def _extract_amounts_quantities(tokens: list[str]):
 
 _ERGATIVE = {"ne", "ने"}
 _POSSESSIVE = {"ka", "ki", "ko", "के", "की", "को", "కు", "కి", "యొక్క"}
+_HONORIFIC = {"ji", "जी", "గారు", "sahab", "saab", "sir", "madam"}
 
 
 def _extract_name(tokens: list[str], consumed: set[int]) -> tuple[str, set[int]]:
@@ -164,7 +167,12 @@ def _extract_name(tokens: list[str], consumed: set[int]) -> tuple[str, set[int]]
             continue
         nxt = tokens[i + 1] if i + 1 < len(tokens) else ""
         if t in _ERGATIVE or (t in _POSSESSIVE and nxt in WORDS["udhaar"]):
-            return tokens[i - 1], {i - 1}
+            cand = tokens[i - 1]
+            # "geeta ji ke" -> the name is geeta, not ji
+            if cand in _HONORIFIC and i - 2 >= 0 \
+                    and i - 2 not in consumed:
+                return tokens[i - 2], {i - 2}
+            return cand, {i - 1}
     return "", set()
 
 
