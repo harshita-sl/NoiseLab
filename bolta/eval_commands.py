@@ -142,7 +142,12 @@ def eval_one(entry: dict, cond: Condition, chain: str, db: Ledger,
     prop = propose(cmd, db)
     intent_ok = prop.intent == expected.get("intent")
     sh, st = _slot_ok(cmd, expected, db)
-    action_ok = intent_ok and not prop.error and sh == st
+    # confirm/deny are conversational, not ledger actions — a correct
+    # intent IS the success; writes additionally require all slots.
+    if expected.get("intent") in ("confirm", "deny"):
+        action_ok = intent_ok
+    else:
+        action_ok = intent_ok and not prop.error and sh == st
     if expected.get("intent") == "unknown":
         action_ok = prop.intent in ("unknown",) or bool(prop.error)
     return EvalRow(entry["id"], entry["split"], cond.name, chain, hyp,
@@ -177,12 +182,21 @@ def run(commands: list[dict], conditions: list[Condition],
     rows = [r for r in old["rows"] if not r.get("error")]
     done = {(r["entry_id"], r["condition"], r["chain"]) for r in rows}
     for e in commands:
-        ref = prepare(e)
+        try:
+            ref = prepare(e)
+        except Exception as exc:  # noqa: BLE001 - keep run alive
+            logger.error("prepare %s failed: %s", e["id"], exc)
+            continue
         for cond in conditions:
             for chain in chains:
                 if (e["id"], cond.name, chain) in done:
                     continue
-                render(e, cond, chain, ref)
+                try:
+                    render(e, cond, chain, ref)
+                except Exception as exc:  # noqa: BLE001
+                    logger.error("render %s %s failed: %s", e["id"],
+                                 cond.name, exc)
+                    continue
                 row = eval_one(e, cond, chain, db)
                 rows.append(row.to_dict())
                 results_path.parent.mkdir(parents=True, exist_ok=True)

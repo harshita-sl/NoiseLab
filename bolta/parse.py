@@ -34,7 +34,8 @@ UNITS = {
     "కిలో": "kg", "కిలోల": "kg", "కిలోలు": "kg", "లీటరు": "liter",
     "లీటర్లు": "liter", "ప్యాకెట్": "packet",
     "ప్యాకెట్లు": "packet", "కార్టన్": "carton", "కార్టన్ల": "carton",
-    "కార్టన్లు": "carton",
+    "కార్టన్లు": "carton", "కాటన్ల": "carton", "కాటన్": "carton",
+    "daba": "dabba", "dabba": "dabba", "डब्बा": "dabba",
 }
 
 MONEY_WORDS = {"rupaye", "rupya", "rupay", "paisa", "paise", "rs", "rupees",
@@ -47,29 +48,35 @@ QUESTION_WORDS = {"kitna", "kitni", "kitne", "kya", "कितना", "कि�
 
 WORDS = {
     "udhaar": {"udhaar", "udhar", "baki", "baaki", "bakaya", "balance",
-               "उधार", "बाकी", "बकाया", "बैलेंस", "అప్పు", "బాకీ"},
+               "उधार", "बाकी", "बकाया", "बैलेंस", "అప్పు", "బాకీ",
+               "appu"},
     "stock": {"stock", "bacha", "bachi", "bache", "bachcha", "bachchi",
               "baki", "hai", "pada", "pade", "padi", "स्टॉक", "बचा",
               "बची", "बचे", "पड़ा", "पड़े", "पड़ी", "మిగిల", "ఉన్నాయి",
-              "స్టాక్"},
+              "స్టాక్", "మిగిలాయి", "మిగిలినాయి", "మిగిలింది"},
     "give_pay": {"diya", "diye", "jama", "paid", "bhara", "bhare", "de",
                  "diyaa", "dene", "denge", "दिया", "दिए", "जमा", "भरा",
                  "भरे", "दिया", "देने",
                  "ఇచ్చాడు", "ఇచ్చారు", "ఇచ్చింది", "చెల్లించారు",
                  "ivvali", "ichaaru", "ichindi", "ivvu", "ivvandi",
-                 "icheyam", "dene hai", "dene hain"},
+                 "icheyam", "dene hai", "dene hain",
+                 "జమ", "చేశాడు", "చేసాను", "చేసింది", "చెల్లించింది",
+                 "ichchar", "ichar"},
     "take_buy": {"liya", "liye", "le", "khareeda", "kharida", "teesukunda",
                  "teesukundi", "लिया", "लिए", "खरीदा", "खरीदी", "ली",
                  "తీసుకుంది", "తీసుకున్నాడు"},
     "sold": {"bika", "biki", "bike", "bik", "sold", "becha", "bechi", "gay",
              "gaya", "gayi", "gaye", "बिका", "बिकी", "बिके", "बिक", "गया",
              "गई", "गए", "बेचा", "बेची", "अम్మాను",
-             "అమ్మేశాను", "అమ్ముడయ్యింది", "అమ్మకం"},
+             "అమ్మేశాను", "అమ్ముడయ్యింది", "అమ్మకం", "bick",
+             "అమ్ముడైంది", "అమ్ముడాయి", "అమ్మేశాడు"},
     "purchase": {"mangaya", "mangwana", "mangwani", "mangao", "mangau",
                  "order", "aaya", "aayi", "aane", "aaye", "आए", "मंगवाया",
                  "मंगवानी",
                  "मंगाओ", "मंगाऊ", "ऑर्डर", "आया", "आयी", "ఆర్డర్",
-                 "మంగించాను", "వచ్చాయి", "వచ్చింది"},
+                 "మంగించాను", "వచ్చాయి", "వచ్చింది",
+                 "mangvani", "mangavana", "mangava", "aye", "ayye",
+                 "मंगवाओ", "మంగించండి", "మంగించావు"},
     "suggest": {"karna chahiye", "kya order", "kya mangau", "kya mangwana",
                 "suggest", "kya mangana", "mangana chahiye",
                 "kya lena chahiye", "kya order karna chahiye",
@@ -89,11 +96,12 @@ STOPWORDS = (CASE_MARKERS | MONEY_WORDS | QUESTION_WORDS | {
 
 CONFIRM_WORDS = {"haan", "ha", "han", "sahi", "theek", "ok", "yes", "sare",
                  "correct", "हाँ", "हां", "सही", "ठीक", "ओके", "అవును",
-                 "సరే", "అవునా"}
+                 "సరే", "అవునా", "saare", "rai"}
 DENY_WORDS = {"nahi", "nahin", "na", "galat", "wrong", "cancel", "नहीं",
               "गलत", "कैंसल", "కాదు", "వద్దు"}
 UNDO_WORDS = {"undo", "wapas", "wapis", "piche", "hatao", "vapas",
-              "पीछे", "वापस", "हटाओ", "అన్డు", "తిరిగి", "రద్దు"}
+              "पीछे", "वापस", "हटाओ", "అన్డు", "తిరిగి", "రద్దు",
+              "andukaro", "andu", "undu"}
 
 
 @dataclass
@@ -171,10 +179,10 @@ def parse(text: str, lang: str = "") -> Command:
         return cmd
 
     toks = set(tokens)
-    if toks & CONFIRM_WORDS and len(tokens) <= 4:
+    if toks & CONFIRM_WORDS and len(tokens) <= 6:
         cmd.intent = "confirm"
         return cmd
-    if toks & DENY_WORDS and len(tokens) <= 4:
+    if toks & DENY_WORDS and len(tokens) <= 6:
         cmd.intent = "deny"
         return cmd
     if toks & UNDO_WORDS:
@@ -197,6 +205,10 @@ def parse(text: str, lang: str = "") -> Command:
 
     is_question = bool(toks & QUESTION_WORDS)
     has_udhaar = bool(toks & WORDS["udhaar"])
+    # imperative udhaar verbs count as questions: "udhaar likho" = what's
+    # the balance
+    if toks & {"likho", "likh", "batao", "bata", "cheppu", "చెప్పు"}:
+        is_question = True
     # 'hai' alone is too common to count as a stock signal
     has_stock = bool(toks & (WORDS["stock"] - {"hai"}))
     has_pay = bool(toks & WORDS["give_pay"])

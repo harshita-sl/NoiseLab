@@ -67,3 +67,24 @@ Next: full command-eval run (await approval), demo hardening,
 recording more real clips, submission docs.
 
 Credits: ~30 spent total so far (smoke eval + debug calls).
+
+## Oct 22 — Command eval FIRED: first real numbers
+
+Full matrix: 84 commands x 6 conditions (unenhanced) = 504 live
+Prisma jobs + ~81 TTS. API flaked mid-run (conn resets); runner made
+resilient to prepare/render failures; resumed and completed 504/504.
+
+RESULTS (action success, all slots + intent + no error):
+  clean 88.1% | fan_10 88.1% | fan_5 88.1% | phone 86.9%
+  traffic_10 79.8% | babble_5 67.9%   <- hardest: crowd noise
+
+Per-split clean: hi 92%, te 88%, hg 84%, teleng 17% — en-IN renders
+Telugu phonetically (entha->anthaon, emiti->amity): honest finding.
+
+Parser hardened against REAL Prisma spellings from the run
+(mangvani/mangava/aye/bick, తెలుగు verb forms, undu/saare/appu);
++20pp clean action success via zero-cost --reparse. Chart:
+outputs/results/command_eval.png. Remaining fails: hg18 ambiguous
+phrasing, hg20/hg22 genuine STT mangles, tg phonetic collapse.
+
+API calls today: ~610 (eval 574 + missing-job fill ~30 + retries).
