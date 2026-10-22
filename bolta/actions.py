@@ -42,11 +42,26 @@ def propose(cmd: Command, db: Ledger) -> ActionProposal:
     s = cmd.slots
 
     if cmd.unresolved or cmd.intent == "unknown":
-        missing = ", ".join(cmd.unresolved) or "command"
+        # explain WHICH slot failed + offer near-matches
+        bits = []
+        for slot in cmd.unresolved:
+            heard = s.get(slot, "")
+            near = s.get(f"near_{slot}", [])
+            if near:
+                bits.append(f"{slot} '{heard}' nahi mila — "
+                            f"matlab {', '.join(near)}")
+            elif heard:
+                bits.append(f"{slot} '{heard}' khata mein nahi hai")
+            else:
+                bits.append(f"{slot} nahi suna")
+        if not bits:
+            bits.append("command samajh nahi aaya")
+        why = "; ".join(bits)
         return ActionProposal(
             intent=cmd.intent, confidence=cmd.confidence,
-            description=f"Samajh nahi aaya — {missing} missing/unclear. "
-                        "Dobara bolo.",
+            description=f"{why}. Dobara bolo — jaise "
+                        "'Rahul ne paanch sau diye' ya "
+                        "'Maggi kitni bachi hai'.",
             spoken_hi="समझ नहीं आया, दोबारा बोलो।",
             spoken_hinglish="Samajh nahi aaya, dobara bolo.",
             error="unresolved", ops=[])

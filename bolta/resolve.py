@@ -43,7 +43,8 @@ def _match(text: str, rows) -> tuple[object | None, float, list]:
         scored.append((best, row))
     scored.sort(key=lambda t: t[0], reverse=True)
     if not scored or scored[0][0] < MATCH_THRESHOLD:
-        return None, scored[0][0] if scored else 0.0, []
+        return None, scored[0][0] if scored else 0.0, [
+            r for s, r in scored[:3]]
     winner, wscore = scored[0][1], scored[0][0]
     ties = [r for s, r in scored[1:] if wscore - s < AMBIGUITY_DELTA]
     return winner, wscore, ties
@@ -62,6 +63,8 @@ def resolve(cmd: Command, db: Ledger) -> Command:
                 cmd.confidence = min(cmd.confidence, 0.55)
         else:
             cmd.unresolved.append("customer")
+            cmd.slots["near_customer"] = [
+                r["name"] for r in ties]  # ties holds top-3 here
             cmd.confidence = min(cmd.confidence, 0.4)
 
     if cmd.slots.get("product"):
@@ -75,6 +78,7 @@ def resolve(cmd: Command, db: Ledger) -> Command:
                 cmd.confidence = min(cmd.confidence, 0.55)
         else:
             cmd.unresolved.append("product")
+            cmd.slots["near_product"] = [r["name_en"] for r in ties]
             cmd.confidence = min(cmd.confidence, 0.4)
     return cmd
 

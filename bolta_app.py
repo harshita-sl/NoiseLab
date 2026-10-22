@@ -146,7 +146,7 @@ def _results(prop, transcript: str, lang_key: str):
                 f"(confidence {prop.confidence:.2f})")
 
     if prop.error or prop.intent == "unknown":
-        st.error("Samajh nahi aaya — " + prop.description)
+        st.error("❌ " + prop.description)
         _speak(prop.speak(lang_key), lang_key)
         return
 
