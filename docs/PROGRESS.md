@@ -88,3 +88,18 @@ outputs/results/command_eval.png. Remaining fails: hg18 ambiguous
 phrasing, hg20/hg22 genuine STT mangles, tg phonetic collapse.
 
 API calls today: ~610 (eval 574 + missing-job fill ~30 + retries).
+
+## Oct 23 — Enhanced-chain comparison + prebake
+
+Fired the full enhanced matrix: 84 x 6 x hp+specgate+loudnorm
+(504 STT calls). FINDING: enhancement is neutral-to-negative —
+clean/fan_10/babble unchanged, fan_5 -4.8pp, phone -2.4pp,
+traffic +1.2pp. Prisma handles moderate noise already; spectral
+gating adds artifacts without recovering speech. Honest claim:
+input enhancement does NOT rescue command accuracy — the
+confirm/re-ask UX is the real safety net. Prebaked 10 reply
+phrases (Nalini hi-IN + Poorvi hi-en) for instant demo read-backs.
+Chart now shows raw-vs-enhanced grouped bars.
+
+Credits total: ~21.4 -> ~39 consumed (per dashboard model
+~0.034/request). 1008 eval jobs complete, all auditable.
