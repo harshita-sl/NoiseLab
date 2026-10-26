@@ -52,7 +52,7 @@ def stt_client() -> GnaniSTTClient:
         _stt_client = GnaniSTTClient()
     return _stt_client
 
-
+### represent the REST API for TTS
 def _synth_rest(text: str, voice: str, language: str, model: str,
                 sample_rate: int) -> bytes:
     """Direct REST TTS — used for language='hi-en' which the SDK rejects."""

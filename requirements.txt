@@ -7,3 +7,7 @@ matplotlib>=3.8
 python-dotenv>=1.0
 requests>=2.31
 pytest>=8.0
+
+# demo video recorder only (drives system Chrome; needs `playwright install ffmpeg`
+# or a symlinked ffmpeg in ~/.cache/ms-playwright/ffmpeg-*)
+playwright>=1.64
