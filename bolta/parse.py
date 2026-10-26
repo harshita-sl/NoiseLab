@@ -98,9 +98,16 @@ STOPWORDS = (CASE_MARKERS | MONEY_WORDS | QUESTION_WORDS | {
     "करो", "कर", "दो", "देना", "बताओ", "और", "से", "में", "उన్నాయి",
     "khata", "khate", "khaata", "bahi", "खाता", "खाते", "बही",
     "arre", "are", "toh", "na", "acha", "accha", "yaar", "अरे", "तो",
+    "and", "total", "karna", "karni", "uska", "iska", "uski", "hai",
+    "customer", "account", "कस्टमर",
     "invoice", "number", "bill", "percent", "refund", "wala", "wali",
     "hoga", "hogi", "scene", "नंबर", "नम्बर",
     "చెప్పు", "లో", "ఉంది", "ఉందా", "ఉన్నాది", "ఉన్నావా"})
+
+NEW_WORDS = {"naya", "nayi", "new", "नया", "नयी", "నया", "కొత్త",
+             "kotta", "kotha"}
+NAME_BLOCKLIST = {"customer", "account", "naam", "naya", "nayi", "new",
+                  "uska", "iska", "mera", "unka", "apna", "ek", "koi"}
 
 CONFIRM_WORDS = {"haan", "ha", "han", "sahi", "theek", "ok", "yes", "sare",
                  "correct", "हाँ", "हां", "सही", "ठीक", "ओके", "అవును",
@@ -178,6 +185,8 @@ def _extract_name(tokens: list[str], consumed: set[int]) -> tuple[str, set[int]]
         nxt = tokens[i + 1] if i + 1 < len(tokens) else ""
         if t in _ERGATIVE or (t in _POSSESSIVE and nxt in WORDS["udhaar"]):
             cand = tokens[i - 1]
+            if cand in NAME_BLOCKLIST:
+                continue
             # "geeta ji ke" -> the name is geeta, not ji
             if cand in _HONORIFIC and i - 2 >= 0 \
                     and i - 2 not in consumed:
@@ -234,10 +243,37 @@ def parse(text: str, lang: str = "") -> Command:
     has_sold = bool(toks & WORDS["sold"])
     has_purchase = bool(toks & WORDS["purchase"])
     has_adjust = bool(toks & WORDS["adjust"])
+    has_new = bool(toks & NEW_WORDS)
 
+    # "naya customer add karo, uska naam priya, total 500 likh do" ->
+    # create-customer write. Checked first: 'udhaar/likh do' inside it
+    # would otherwise masquerade as a balance question.
+    if has_new and (toks & {"customer", "account", "khata", "कस्टमर"}):
+        cmd.intent = "add_customer"
+        nm = ""
+        for i, t in enumerate(tokens):
+            if t == "naam" and i + 1 < len(tokens) \
+                    and tokens[i + 1] not in (STOPWORDS | NAME_BLOCKLIST):
+                nm = tokens[i + 1]
+                break
+        if not nm:
+            cands = ([name] if name else []) + [
+                t for t in leftover if t not in NAME_BLOCKLIST]
+            nm = cands[0] if cands else ""
+        cmd.slots["customer"] = nm
+        open_amt = amount
+        if open_amt is None:
+            free = [t for i, t in _numbers(tokens) if i not in consumed]
+            # 'ek'/'do' filler -> 1/2 digits aren't amounts
+            big = [f for f in free if float(f) not in (1, 2)]
+            pool = big or free
+            open_amt = float(pool[0]) if pool else None
+        if open_amt is not None:
+            cmd.slots["amount"] = int(open_amt * 100)
+        cmd.confidence = 0.85 if nm else 0.4
     # "udhaar 500 update/adjust/set karo" -> credit sale (generic); qty +
     # adjust -> restock. Imperative adjust beats question-shaped fallbacks.
-    if has_adjust and amount is not None and (has_udhaar or name):
+    elif has_adjust and amount is not None and (has_udhaar or name):
         cmd.intent = "record_sale"
         if not name and leftover:
             name = leftover[0]
@@ -296,8 +332,10 @@ def parse(text: str, lang: str = "") -> Command:
             free = [t for i, t in _numbers(tokens) if i not in consumed
                     and (i + 1 >= len(tokens)
                          or tokens[i + 1] != "percent")]
-            if free:
-                cand_amount = float(free[0])
+            big = [f for f in free if float(f) not in (1, 2)]
+            pool = big or free
+            if pool:
+                cand_amount = float(pool[0])
         if has_udhaar and cand_name:
             cmd.intent = "check_credit"
             cmd.slots["customer"] = cand_name
@@ -320,7 +358,8 @@ def parse(text: str, lang: str = "") -> Command:
                 "record_sale": ("product",),
                 "add_purchase": ("product",),
                 "check_stock": ("product",),
-                "check_credit": ("customer",)}
+                "check_credit": ("customer",),
+                "add_customer": ("customer",)}
     for slot in required.get(cmd.intent, ()):
         if not cmd.slots.get(slot):
             cmd.slots.pop(slot, None)

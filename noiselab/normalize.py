@@ -161,7 +161,8 @@ _ROM_HI_ONES = {
     "tiranave": 93, "chauranave": 94, "pachanave": 95, "chhiyanave": 96,
     "sattanave": 97, "atthanave": 98, "ninyanave": 99,
 }
-_ROM_HI_SCALES = {"sau": 100, "sow": 100, "hazaar": 1000, "hazar": 1000,
+_ROM_HI_SCALES = {"sau": 100, "sow": 100, "sao": 100, "hazaar": 1000,
+                  "hazar": 1000,
                   "karod": 10_000_000}
 
 # Telugu — own script (te-IN STT output). Plural scale forms included

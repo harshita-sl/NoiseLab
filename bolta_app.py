@@ -136,6 +136,12 @@ def _post_write_metric(prop) -> str:
         name = next((p["name_en"] for p in db.products() if p["id"] == pid),
                     "item")
         parts.append(f"**{name} stock ab: {db.stock(pid):g}**")
+    if op.get("kind") == "new_customer":
+        row = next((c for c in db.customers() if c["name"] == op["name"]),
+                   None)
+        if row:
+            parts.append(f"**{row['name']} ka udhaar ab: "
+                         f"₹{db.balance_paise(row['id']) // 100}**")
     return " · ".join(parts)
 
 

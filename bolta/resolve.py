@@ -54,7 +54,17 @@ def resolve(cmd: Command, db: Ledger) -> Command:
     """Fill customer_id / product_id / amount on a Command in place."""
     if cmd.slots.get("customer"):
         row, score, ties = _match(cmd.slots["customer"], db.customers())
-        if row is not None:
+        if cmd.intent == "add_customer":
+            # name is NEW by definition — an existing match is info, not
+            # a failure: proposal explains instead of duplicating
+            if row is not None:
+                cmd.slots["existing_id"] = row["id"]
+                cmd.slots["customer_name"] = row["name"]
+                cmd.slots["existing_balance"] = db.balance_paise(row["id"])
+            else:
+                cmd.slots["new_name"] = cmd.slots["customer"]
+            cmd.slots.pop("customer", None)
+        elif row is not None:
             cmd.slots["customer_id"] = row["id"]
             cmd.slots["customer_name"] = row["name"]
             if ties:

@@ -177,3 +177,25 @@ class TestEntityFallback:
         assert intent("rahul ka udhaar kitna hai") == "check_credit"
         assert intent("rahul ne paanch sau rupaye diye") == "record_payment"
         assert intent("maggi kitni bachi hai") == "check_stock"
+
+
+class TestAddCustomer:
+    @pytest.mark.parametrize("t,name,opening", [
+        ("ek new customer ka udhar add karna uska naam shankar hai "
+         "and uska total five hundred likh do", "shankar", 50000),
+        ("naya customer add karo uska naam deepak", "deepak", None),
+        ("naya account kholo naam meena sao rupaye udhaar", "meena", 10000),
+    ])
+    def test_new_customer(self, t, name, opening):
+        c = parse(t)
+        assert c.intent == "add_customer"
+        assert c.slots["customer"] == name
+        if opening is None:
+            assert "amount" not in c.slots
+        else:
+            assert c.slots["amount"] == opening
+
+    def test_customer_word_not_a_name(self):
+        # 'customer ka udhar' must not yield 'customer' as a person
+        c = parse("customer ka udhar kitna hai")
+        assert c.slots.get("customer") != "customer"

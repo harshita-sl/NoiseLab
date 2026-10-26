@@ -127,6 +127,36 @@ def propose(cmd: Command, db: Ledger) -> ActionProposal:
                   "customer_id": s.get("customer_id"),
                   "credit": credit}])
 
+    if cmd.intent == "add_customer":
+        if s.get("existing_id"):
+            nm, bal = s["customer_name"], s["existing_balance"]
+            return ActionProposal(
+                intent="add_customer", needs_confirm=False,
+                description=(f"{nm} pehle se khata mein hai — udhaar "
+                             f"₹{bal // 100}. Update ke liye bolo "
+                             f"'{nm} ka udhaar ... karo'."),
+                spoken_hi=(f"{nm} पहले से खाते में है, उधार "
+                           f"{_money_words(bal, 'hi')} है।"),
+                spoken_hinglish=(f"{nm} pehle se khata mein hai, "
+                                 f"udhaar {_money_words(bal, 'ro')} hai."))
+        nm = s.get("new_name") or s.get("customer") or "?"
+        opening = int(s.get("amount") or 0)
+        desc = f"Naya customer {nm}"
+        if opening:
+            desc += f" — opening udhaar ₹{opening // 100}"
+        return ActionProposal(
+            intent="add_customer", confidence=cmd.confidence,
+            description=desc,
+            spoken_hi=(f"नया कस्टमर {nm}"
+                       + (f", शुरुआती उधार {_money_words(opening, 'hi')}"
+                          if opening else "") + ". सही है?"),
+            spoken_hinglish=(f"Naya customer {nm}"
+                             + (f", opening udhaar "
+                                f"{_money_words(opening, 'ro')}"
+                                if opening else "") + ". Sahi hai?"),
+            ops=[{"kind": "new_customer", "name": nm,
+                  "opening_paise": opening}])
+
     if cmd.intent == "check_credit":
         bal = db.balance_paise(s["customer_id"])
         name = s["customer_name"]
@@ -212,6 +242,15 @@ def apply(proposal: ActionProposal, db: Ledger, *,
             txn_id = db.add_purchase(
                 op["product_id"], op["qty"], unit=op.get("unit", "piece"),
                 audio_hash=audio_hash, transcript=transcript)
+        elif op["kind"] == "new_customer":
+            cid = db.add_customer(op["name"])
+            txn_id = None
+            if op.get("opening_paise"):
+                txn_id = db.record_sale(
+                    None, None, customer_id=cid,
+                    amount_paise=op["opening_paise"], credit=True,
+                    note="opening udhaar", audio_hash=audio_hash,
+                    transcript=transcript)
     if audit_id is not None and txn_id:
         db.mark_confirmed(audit_id, txn_id)
     return txn_id
