@@ -84,6 +84,8 @@ WORDS = {
                 "kya lena chahiye", "kya order karna chahiye",
                 "क्या ऑर्डर", "क्या मंगाऊ", "क्या मंगवाना",
                 "क्या मंगाना", "కొనాలి", "ఏమి ఆర్డర్"},
+    "adjust": {"update", "adjust", "set", "badlo", "badal", "likhdo",
+               "अपडेट", "बदलो", "बदल", "दर्ज"},
 }
 
 CASE_MARKERS = {"ne", "ka", "ki", "ko", "ke", "ने", "का", "की", "को", "के",
@@ -94,6 +96,10 @@ STOPWORDS = (CASE_MARKERS | MONEY_WORDS | QUESTION_WORDS | {
     "mein", "main", "the", "a", "ab", "abhi", "ek", "pe", "par", "ko",
     "samaan", "saman", "सामान", "సామాను", "पर", "पे", "है", "हैं", "हो",
     "करो", "कर", "दो", "देना", "बताओ", "और", "से", "में", "उన్నాయి",
+    "khata", "khate", "khaata", "bahi", "खाता", "खाते", "बही",
+    "arre", "are", "toh", "na", "acha", "accha", "yaar", "अरे", "तो",
+    "invoice", "number", "bill", "percent", "refund", "wala", "wali",
+    "hoga", "hogi", "scene", "नंबर", "नम्बर",
     "చెప్పు", "లో", "ఉంది", "ఉందా", "ఉన్నాది", "ఉన్నావా"})
 
 CONFIRM_WORDS = {"haan", "ha", "han", "sahi", "theek", "ok", "yes", "sare",
@@ -142,12 +148,16 @@ def _extract_amounts_quantities(tokens: list[str]):
         elif nxt in WORDS["give_pay"] or prv in WORDS["give_pay"]:
             amount = float(t)  # "paanch sau diye" -> paid 500
             consumed.add(i)
+        elif prv in ("number", "invoice", "bill", "नंबर", "నంబర్"):
+            consumed.add(i)  # identifier, not money/qty
         elif nxt in ("ka", "ki", "के", "की") and i + 2 < len(tokens) \
                 and tokens[i + 2] not in WORDS["udhaar"]:
             amount = float(t)  # "500 ka samaan" -> price
             consumed.add(i)
-        elif prv in ("number", "invoice", "bill", "नंबर", "నంబర్"):
-            consumed.add(i)  # identifier, not money/qty
+        elif nxt in WORDS["adjust"] or prv in WORDS["adjust"] \
+                or nxt in WORDS["udhaar"] or prv in WORDS["udhaar"]:
+            amount = float(t)  # "udhaar 500 update" -> 500 rupees
+            consumed.add(i)
     return amount, qty, unit, consumed
 
 
@@ -223,8 +233,23 @@ def parse(text: str, lang: str = "") -> Command:
     has_buy = bool(toks & WORDS["take_buy"])
     has_sold = bool(toks & WORDS["sold"])
     has_purchase = bool(toks & WORDS["purchase"])
+    has_adjust = bool(toks & WORDS["adjust"])
 
-    if is_question and has_udhaar:
+    # "udhaar 500 update/adjust/set karo" -> credit sale (generic); qty +
+    # adjust -> restock. Imperative adjust beats question-shaped fallbacks.
+    if has_adjust and amount is not None and (has_udhaar or name):
+        cmd.intent = "record_sale"
+        if not name and leftover:
+            name = leftover[0]
+        cmd.slots.update(customer=name, amount=int(amount * 100),
+                         credit=True)
+        cmd.confidence = 0.8 if name else 0.5
+    elif has_adjust and qty is not None and leftover:
+        cmd.intent = "add_purchase"
+        cmd.slots["product"] = " ".join(leftover)
+        cmd.slots["qty"], cmd.slots["unit"] = qty, unit
+        cmd.confidence = 0.85
+    elif is_question and has_udhaar:
         cmd.intent = "check_credit"
         cmd.slots["customer"] = name or (leftover[0] if leftover else "")
         cmd.confidence = 0.9 if cmd.slots["customer"] else 0.4
@@ -262,7 +287,33 @@ def parse(text: str, lang: str = "") -> Command:
             cmd.slots["credit"] = True
         cmd.confidence = 0.85
     else:
-        cmd.confidence = 0.0
+        # entity-driven fallback: entities resolved but no verb matched —
+        # propose the most plausible low-confidence action rather than
+        # giving up. The confirmation card still gates any write.
+        cand_name = name or (leftover[0] if leftover else "")
+        cand_amount = amount
+        if cand_amount is None:
+            free = [t for i, t in _numbers(tokens) if i not in consumed
+                    and (i + 1 >= len(tokens)
+                         or tokens[i + 1] != "percent")]
+            if free:
+                cand_amount = float(free[0])
+        if has_udhaar and cand_name:
+            cmd.intent = "check_credit"
+            cmd.slots["customer"] = cand_name
+            cmd.confidence = 0.55
+        elif cand_amount is not None and cand_name:
+            cmd.intent = "record_payment"
+            cmd.slots.update(customer=cand_name,
+                             amount=int(cand_amount * 100))
+            cmd.confidence = 0.4
+        elif qty is not None and leftover:
+            cmd.intent = "record_sale"
+            cmd.slots["product"] = " ".join(leftover)
+            cmd.slots["qty"], cmd.slots["unit"] = qty, unit
+            cmd.confidence = 0.4
+        else:
+            cmd.confidence = 0.0
 
     # required-slot check drops confidence, never invents values
     required = {"record_payment": ("customer", "amount"),

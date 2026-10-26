@@ -129,3 +129,51 @@ class TestSlotExtraction:
         c = parse("invoice number 203 ka refund pachaas percent hoga")
         # 203 must not become amount; 50 percent has no intent anyway
         assert c.intent == "unknown"
+
+
+class TestAdjustPhrasing:
+    """'update/adjust/set' imperatives — spoken phrasings outside the corpus."""
+
+    @pytest.mark.parametrize("t,name,amount", [
+        ("khate mein rahul ka udhar five hundred update kar do", "rahul", 50000),
+        ("rahul ka udhaar 500 update karo", "rahul", 50000),
+        ("priya ka udhaar do sau set kar do", "priya", 20000),
+        ("kaka ka udhaar teen sau rupaye adjust karo", "kaka", 30000),
+        ("mohan ka udhaar badlo paanch sau", "mohan", 50000),
+    ])
+    def test_udhaar_update_is_credit_sale(self, t, name, amount):
+        c = parse(t)
+        assert c.intent == "record_sale"
+        assert c.slots["customer"] == name
+        assert c.slots["amount"] == amount
+        assert c.slots["credit"] is True
+
+    def test_stock_update_is_purchase(self):
+        c = parse("maggi ka stock 20 packet update kar do")
+        assert c.intent == "add_purchase"
+        assert c.slots["product"] == "maggi"
+        assert c.slots["qty"] == 20 and c.slots["unit"] == "packet"
+
+
+class TestEntityFallback:
+    """Entities resolved but no verb matched -> plausible low-conf proposal
+    instead of 'unknown' (confirm card still gates any write)."""
+
+    def test_bare_udhaar_name_is_credit_check(self):
+        c = parse("sunil ka udhaar batao na please")
+        # 'batao' already makes it a question; use a truly verb-less case:
+        c = parse("toh sunil ka udhaar")
+        assert c.intent == "check_credit"
+        assert c.slots["customer"] == "sunil"
+        assert c.confidence < 0.6
+
+    def test_amount_and_name_falls_back_to_payment(self):
+        c = parse("arre vijay 400 wala scene")
+        assert c.intent == "record_payment"
+        assert c.slots["amount"] == 40000
+        assert c.confidence < 0.5
+
+    def test_regressions_unchanged(self):
+        assert intent("rahul ka udhaar kitna hai") == "check_credit"
+        assert intent("rahul ne paanch sau rupaye diye") == "record_payment"
+        assert intent("maggi kitni bachi hai") == "check_stock"
