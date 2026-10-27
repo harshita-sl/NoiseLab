@@ -1,0 +1,86 @@
+2026-10-26 21:55:18.091 Uvicorn server started on :::8501
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.50.54.15:8501
+
+  Help agents write better Streamlit apps?
+  Install the official Streamlit skills by running streamlit skills in your terminal.
+
+INFO  gnani | [STT REST] transcribe start | request_id=req_d2ed140ee732 | language=en-IN
+STT 1/4 failed (status=None), retry in 2.0s
+INFO  gnani | [STT REST] transcribe start | request_id=req_e7c48e1c7ff0 | language=en-IN
+INFO  gnani | [STT REST] transcribe complete | request_id=req_e7c48e1c7ff0
+INFO  gnani | [STT REST] transcribe start | request_id=req_5af2b843e819 | language=en-IN
+INFO  gnani | [STT REST] transcribe complete | request_id=req_5af2b843e819
+2026-10-26 21:56:23.636 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-10-26 21:56:24.029 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-10-26 21:56:33.555 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-10-26 21:56:33.566 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+  Stopping...
+2026-10-26 23:31:50.883 Uvicorn server started on :::8502
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8502
+  Network URL: http://10.50.54.15:8502
+
+  Help agents write better Streamlit apps?
+  Install the official Streamlit skills by running streamlit skills in your terminal.
+
+INFO  gnani | [STT REST] transcribe start | request_id=req_1622eedb434c | language=en-IN
+STT 1/4 failed (status=None), retry in 2.0s
+INFO  gnani | [STT REST] transcribe start | request_id=req_70e3fe593912 | language=en-IN
+INFO  gnani | [STT REST] transcribe complete | request_id=req_70e3fe593912
+INFO  gnani | [STT REST] transcribe start | request_id=req_b740ae29f42a | language=en-IN
+INFO  gnani | [STT REST] transcribe complete | request_id=req_b740ae29f42a
+INFO  gnani | [STT REST] transcribe start | request_id=req_61aa15eb9759 | language=en-IN
+INFO  gnani | [STT REST] transcribe complete | request_id=req_61aa15eb9759
+2026-10-26 23:33:44.819 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-10-26 23:33:45.167 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-10-26 23:34:04.113 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-10-26 23:34:04.128 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-10-26 23:34:14.546 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-10-26 23:34:14.559 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+  Stopping...
